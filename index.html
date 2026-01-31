@@ -3,16 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Unified Trading Dashboard - Technical + Macro + Geopolitical Analysis</title>
+    <title>Complete Trading Dashboard - Technical • Macro • Geopolitical</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
         body {
             font-family: 'Inter', sans-serif;
             background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 100%);
@@ -20,12 +16,9 @@
             padding: 15px;
             color: #e2e8f0;
         }
-
-        .container {
-            max-width: 1800px;
-            margin: 0 auto;
-        }
-
+        
+        .container { max-width: 1900px; margin: 0 auto; }
+        
         header {
             background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
             padding: 30px;
@@ -37,7 +30,7 @@
             position: relative;
             overflow: hidden;
         }
-
+        
         header::before {
             content: '';
             position: absolute;
@@ -49,12 +42,12 @@
             background-size: 200% 100%;
             animation: gradient 4s linear infinite;
         }
-
+        
         @keyframes gradient {
             0% { background-position: 0% 50%; }
             100% { background-position: 200% 50%; }
         }
-
+        
         h1 {
             background: linear-gradient(135deg, #60a5fa 0%, #a78bfa 50%, #f472b6 100%);
             -webkit-background-clip: text;
@@ -64,325 +57,378 @@
             font-weight: 900;
             letter-spacing: -0.03em;
         }
-
+        
         .subtitle {
             color: #94a3b8;
             font-size: 1.15em;
             font-weight: 500;
             margin-bottom: 15px;
         }
-
+        
+        .update-time {
+            display: inline-block;
+            background: rgba(59, 130, 246, 0.15);
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            color: #60a5fa;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+        
         .overall-score {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 18px;
             margin-bottom: 25px;
         }
-
+        
         .score-card {
             background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
-            padding: 20px;
-            border-radius: 16px;
+            padding: 25px;
+            border-radius: 18px;
             text-align: center;
             border: 1px solid rgba(96, 165, 250, 0.2);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+            box-shadow: 0 12px 35px rgba(0,0,0,0.5);
+            transition: all 0.3s ease;
         }
-
+        
+        .score-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 18px 45px rgba(59, 130, 246, 0.4);
+        }
+        
         .score-label {
             color: #94a3b8;
             font-size: 0.9em;
-            margin-bottom: 10px;
-            font-weight: 600;
+            margin-bottom: 12px;
+            font-weight: 700;
             text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
-
+        
         .score-value {
-            font-size: 2.5em;
+            font-size: 2.8em;
             font-weight: 900;
-            margin: 10px 0;
+            margin: 12px 0;
+            text-shadow: 0 0 20px currentColor;
         }
-
+        
         .score-bullish { color: #10b981; }
         .score-bearish { color: #ef4444; }
         .score-neutral { color: #f59e0b; }
-
+        
+        .score-sub {
+            font-size: 0.9em;
+            color: #cbd5e1;
+            margin-top: 8px;
+            font-weight: 600;
+        }
+        
         .tab-navigation {
             display: flex;
             gap: 12px;
-            margin-bottom: 25px;
+            margin-bottom: 28px;
             flex-wrap: wrap;
             justify-content: center;
             background: rgba(30, 41, 59, 0.6);
-            padding: 15px;
-            border-radius: 20px;
+            padding: 18px;
+            border-radius: 22px;
             border: 1px solid rgba(255,255,255,0.05);
         }
-
+        
         .tab-btn {
             background: transparent;
             color: #94a3b8;
             border: 2px solid rgba(148, 163, 184, 0.2);
-            padding: 14px 28px;
-            border-radius: 14px;
-            font-size: 1em;
+            padding: 15px 30px;
+            border-radius: 16px;
+            font-size: 1.05em;
             font-weight: 700;
             cursor: pointer;
             transition: all 0.3s ease;
             font-family: 'Inter', sans-serif;
         }
-
+        
         .tab-btn:hover {
-            background: rgba(96, 165, 250, 0.1);
+            background: rgba(96, 165, 250, 0.12);
             border-color: #60a5fa;
             color: #60a5fa;
-            transform: translateY(-2px);
+            transform: translateY(-3px);
         }
-
+        
         .tab-btn.active {
             background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
             color: white;
             border-color: transparent;
-            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4);
+            box-shadow: 0 10px 28px rgba(59, 130, 246, 0.5);
         }
-
+        
         .tab-content {
             display: none;
         }
-
+        
         .tab-content.active {
             display: block;
-            animation: fadeIn 0.4s ease;
+            animation: fadeIn 0.5s ease;
         }
-
+        
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
+            from { opacity: 0; transform: translateY(15px); }
             to { opacity: 1; transform: translateY(0); }
         }
-
+        
         .section-title {
-            font-size: 1.8em;
+            font-size: 2em;
             color: #60a5fa;
-            margin: 25px 0 20px 0;
+            margin: 30px 0 22px 0;
             font-weight: 800;
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 15px;
         }
-
+        
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 20px;
-            margin-bottom: 25px;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 22px;
+            margin-bottom: 28px;
         }
-
+        
         .card {
             background: linear-gradient(135deg, #1e293b 0%, #1e293b 100%);
-            border-radius: 20px;
-            padding: 25px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.4);
-            border: 1px solid rgba(96, 165, 250, 0.1);
+            border-radius: 22px;
+            padding: 28px;
+            box-shadow: 0 12px 42px rgba(0,0,0,0.45);
+            border: 1px solid rgba(96, 165, 250, 0.12);
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
         }
-
+        
         .card::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
-            height: 3px;
+            height: 4px;
             background: linear-gradient(90deg, #3b82f6, #8b5cf6);
         }
-
+        
         .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 50px rgba(59, 130, 246, 0.3);
+            transform: translateY(-6px);
+            box-shadow: 0 22px 55px rgba(59, 130, 246, 0.35);
             border-color: rgba(96, 165, 250, 0.4);
         }
-
+        
         .card-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
-            padding-bottom: 15px;
+            margin-bottom: 22px;
+            padding-bottom: 18px;
             border-bottom: 2px solid rgba(255,255,255,0.1);
         }
-
+        
         .card-title {
-            font-size: 1.4em;
-            font-weight: 700;
+            font-size: 1.5em;
+            font-weight: 800;
             color: #60a5fa;
         }
-
+        
         .badge {
-            padding: 6px 16px;
-            border-radius: 20px;
-            font-size: 0.85em;
-            font-weight: 700;
+            padding: 8px 18px;
+            border-radius: 22px;
+            font-size: 0.88em;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
-
+        
         .badge-bullish {
-            background: rgba(16, 185, 129, 0.15);
+            background: rgba(16, 185, 129, 0.18);
             color: #10b981;
-            border: 2px solid rgba(16, 185, 129, 0.3);
+            border: 2px solid rgba(16, 185, 129, 0.35);
         }
-
+        
         .badge-bearish {
-            background: rgba(239, 68, 68, 0.15);
+            background: rgba(239, 68, 68, 0.18);
             color: #ef4444;
-            border: 2px solid rgba(239, 68, 68, 0.3);
+            border: 2px solid rgba(239, 68, 68, 0.35);
         }
-
+        
         .badge-neutral {
-            background: rgba(245, 158, 11, 0.15);
+            background: rgba(245, 158, 11, 0.18);
             color: #f59e0b;
-            border: 2px solid rgba(245, 158, 11, 0.3);
+            border: 2px solid rgba(245, 158, 11, 0.35);
         }
-
+        
         .metric-value {
-            font-size: 2.5em;
+            font-size: 3em;
             font-weight: 900;
             text-align: center;
-            margin: 20px 0;
+            margin: 22px 0;
+            text-shadow: 0 0 25px currentColor;
         }
-
+        
         .value-bullish { color: #10b981; }
         .value-bearish { color: #ef4444; }
         .value-neutral { color: #f59e0b; }
-
+        
+        .crypto-price {
+            font-size: 2.2em;
+            font-weight: 900;
+            text-align: center;
+            margin: 15px 0;
+        }
+        
         .info-box {
-            background: rgba(59, 130, 246, 0.08);
-            border: 1px solid rgba(59, 130, 246, 0.2);
-            padding: 15px;
-            border-radius: 12px;
-            margin-top: 15px;
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.25);
+            padding: 18px;
+            border-radius: 14px;
+            margin-top: 18px;
         }
-
+        
         .info-title {
-            font-weight: 700;
+            font-weight: 800;
             color: #60a5fa;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
+            font-size: 1.08em;
         }
-
+        
         .info-text {
             color: #cbd5e1;
-            line-height: 1.6;
-            font-size: 0.95em;
+            line-height: 1.7;
+            font-size: 0.98em;
         }
-
+        
         .recommendation-box {
-            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(16, 185, 129, 0.05));
-            border-left: 4px solid #10b981;
-            padding: 20px;
-            border-radius: 12px;
-            margin: 20px 0;
-        }
-
-        .recommendation-box.bearish {
-            background: linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(239, 68, 68, 0.05));
-            border-left-color: #ef4444;
-        }
-
-        .recommendation-title {
-            font-size: 1.3em;
-            font-weight: 800;
-            margin-bottom: 15px;
-            color: #f1f5f9;
-        }
-
-        .recommendation-list {
-            list-style: none;
-            line-height: 1.8;
-        }
-
-        .recommendation-list li::before {
-            content: '✓ ';
-            color: #10b981;
-            font-weight: bold;
-            margin-right: 10px;
-        }
-
-        .recommendation-box.bearish .recommendation-list li::before {
-            content: '✗ ';
-            color: #ef4444;
-        }
-
-        .chart-container {
-            background: white;
-            border-radius: 20px;
-            padding: 25px;
-            margin: 20px 0;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.4);
-        }
-
-        .alert-banner {
-            background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
-            padding: 15px 25px;
-            border-radius: 15px;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            border: 1px solid rgba(255,255,255,0.2);
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { box-shadow: 0 0 20px rgba(220, 38, 38, 0.3); }
-            50% { box-shadow: 0 0 40px rgba(220, 38, 38, 0.6); }
-        }
-
-        .help-box {
-            background: rgba(139, 92, 246, 0.1);
-            border: 1px solid rgba(139, 92, 246, 0.3);
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.12), rgba(16, 185, 129, 0.06));
+            border-left: 5px solid #10b981;
             padding: 25px;
             border-radius: 16px;
             margin: 25px 0;
         }
-
-        .help-title {
-            font-weight: 800;
-            color: #a78bfa;
-            margin-bottom: 15px;
-            font-size: 1.3em;
+        
+        .recommendation-box.bearish {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.12), rgba(239, 68, 68, 0.06));
+            border-left-color: #ef4444;
         }
-
+        
+        .recommendation-box.neutral {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.12), rgba(245, 158, 11, 0.06));
+            border-left-color: #f59e0b;
+        }
+        
+        .recommendation-title {
+            font-size: 1.5em;
+            font-weight: 900;
+            margin-bottom: 18px;
+            color: #f1f5f9;
+        }
+        
+        .recommendation-list {
+            list-style: none;
+            line-height: 2;
+            font-size: 1.05em;
+        }
+        
+        .recommendation-list li::before {
+            content: '✓ ';
+            color: #10b981;
+            font-weight: bold;
+            margin-right: 12px;
+            font-size: 1.2em;
+        }
+        
+        .recommendation-box.bearish .recommendation-list li::before {
+            content: '✗ ';
+            color: #ef4444;
+        }
+        
+        .recommendation-box.neutral .recommendation-list li::before {
+            content: '⚠ ';
+            color: #f59e0b;
+        }
+        
+        .chart-container {
+            background: white;
+            border-radius: 22px;
+            padding: 28px;
+            margin: 25px 0;
+            box-shadow: 0 12px 45px rgba(0,0,0,0.45);
+        }
+        
+        .alert-banner {
+            background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
+            padding: 18px 28px;
+            border-radius: 18px;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            border: 1px solid rgba(255,255,255,0.25);
+            animation: pulse 2.5s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 22px rgba(220, 38, 38, 0.35); }
+            50% { box-shadow: 0 0 45px rgba(220, 38, 38, 0.65); }
+        }
+        
+        .help-box {
+            background: rgba(139, 92, 246, 0.12);
+            border: 1px solid rgba(139, 92, 246, 0.35);
+            padding: 28px;
+            border-radius: 18px;
+            margin: 28px 0;
+        }
+        
+        .help-title {
+            font-weight: 900;
+            color: #a78bfa;
+            margin-bottom: 18px;
+            font-size: 1.4em;
+        }
+        
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 15px;
+            margin-top: 18px;
+            background: rgba(30, 41, 59, 0.4);
+            border-radius: 16px;
+            overflow: hidden;
         }
-
+        
         th {
-            background: rgba(59, 130, 246, 0.2);
-            padding: 12px;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            padding: 16px;
             text-align: left;
-            color: #60a5fa;
-            font-weight: 700;
+            color: white;
+            font-weight: 800;
+            font-size: 1.05em;
         }
-
+        
         td {
-            padding: 12px;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding: 16px;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            color: #cbd5e1;
         }
-
+        
         tr:hover {
-            background: rgba(59, 130, 246, 0.05);
+            background: rgba(59, 130, 246, 0.08);
         }
-
+        
         @media (max-width: 768px) {
-            .grid {
+            .grid, .crypto-grid {
                 grid-template-columns: 1fr;
             }
             
             h1 {
                 font-size: 2em;
             }
-
+            
             .tab-navigation {
                 flex-direction: column;
             }
@@ -392,123 +438,93 @@
 <body>
     <div class="container">
         <header>
-            <h1>🚀 Unified Trading Command Center</h1>
+            <h1>🚀 COMPLETE TRADING COMMAND CENTER</h1>
             <p class="subtitle">Technical Analysis • Macroeconomic Analysis • Geopolitical Risk Assessment</p>
-            <div style="margin-top: 12px; font-size: 0.9em; color: #94a3b8;">
-                <span id="lastUpdate"></span>
-            </div>
+            <div class="update-time" id="lastUpdate"></div>
         </header>
 
         <!-- Overall Market Assessment -->
-        <div class="overall-score" id="overallScore">
-            <!-- Populated by JavaScript -->
-        </div>
+        <div class="overall-score" id="overallScore"></div>
 
         <!-- Tab Navigation -->
         <div class="tab-navigation">
             <button class="tab-btn active" onclick="switchTab('overview')">📊 Overview</button>
-            <button class="tab-btn" onclick="switchTab('technical')">📈 Technical Analysis</button>
-            <button class="tab-btn" onclick="switchTab('macro')">💰 Macro Analysis</button>
-            <button class="tab-btn" onclick="switchTab('geopolitical')">🌍 Geopolitical Risk</button>
-            <button class="tab-btn" onclick="switchTab('recommendations')">🎯 Trading Plan</button>
+            <button class="tab-btn" onclick="switchTab('technical')">📈 Technical</button>
+            <button class="tab-btn" onclick="switchTab('crypto')">💰 Crypto Market</button>
+            <button class="tab-btn" onclick="switchTab('macro')">🏦 Macro</button>
+            <button class="tab-btn" onclick="switchTab('geo')">🌍 Geopolitical</button>
+            <button class="tab-btn" onclick="switchTab('plan')">🎯 Trading Plan</button>
         </div>
 
         <!-- OVERVIEW TAB -->
         <div id="overview" class="tab-content active">
-            <h2 class="section-title">📊 Market Overview & Summary</h2>
-            
-            <div id="summaryRecommendation">
-                <!-- Populated by JavaScript -->
-            </div>
-
-            <div class="grid" id="quickMetrics">
-                <!-- Populated by JavaScript -->
-            </div>
-
+            <h2 class="section-title">📊 Integrated Market Analysis</h2>
+            <div id="summaryRecommendation"></div>
+            <div class="grid" id="quickMetrics"></div>
             <div class="chart-container">
-                <canvas id="overviewChart" height="80"></canvas>
+                <canvas id="overviewChart" height="70"></canvas>
             </div>
         </div>
 
-        <!-- TECHNICAL ANALYSIS TAB -->
+        <!-- TECHNICAL TAB -->
         <div id="technical" class="tab-content">
             <h2 class="section-title">📈 Technical Indicators</h2>
-            
-            <div class="grid" id="technicalIndicators">
-                <!-- Populated by JavaScript -->
-            </div>
-
-            <h2 class="section-title">💹 Crypto Market Analysis</h2>
-            <div class="grid" id="cryptoMarket">
-                <!-- Populated by JavaScript -->
-            </div>
+            <div class="grid" id="technicalIndicators"></div>
         </div>
 
-        <!-- MACRO ANALYSIS TAB -->
+        <!-- CRYPTO MARKET TAB -->
+        <div id="crypto" class="tab-content">
+            <h2 class="section-title">💰 Cryptocurrency Market Analysis</h2>
+            <div class="grid" id="cryptoMarket"></div>
+        </div>
+
+        <!-- MACRO TAB -->
         <div id="macro" class="tab-content">
-            <h2 class="section-title">💰 Key Economic Indicators</h2>
-            
-            <div class="grid" id="macroIndicators">
-                <!-- Populated by JavaScript -->
-            </div>
-
-            <h2 class="section-title">🎯 Economic Scenarios</h2>
-            <div class="grid" id="macroScenarios">
-                <!-- Populated by JavaScript -->
-            </div>
-
+            <h2 class="section-title">🏦 Economic Indicators</h2>
+            <div class="grid" id="macroIndicators"></div>
+            <h2 class="section-title">🎯 Economic Scenarios (12-Month Outlook)</h2>
+            <div id="macroScenarios"></div>
             <div class="chart-container">
-                <canvas id="macroChart" height="80"></canvas>
+                <canvas id="macroChart" height="70"></canvas>
             </div>
         </div>
 
         <!-- GEOPOLITICAL TAB -->
-        <div id="geopolitical" class="tab-content">
-            <div id="geopoliticalAlert">
-                <!-- Populated by JavaScript -->
-            </div>
-
+        <div id="geo" class="tab-content">
+            <div id="geopoliticalAlert"></div>
             <h2 class="section-title">🌍 Active Geopolitical Events</h2>
-            <div class="grid" id="geopoliticalEvents">
-                <!-- Populated by JavaScript -->
-            </div>
-
+            <div class="grid" id="geopoliticalEvents"></div>
             <h2 class="section-title">🗺️ Regional Risk Assessment</h2>
-            <div class="grid" id="regionalRisk">
-                <!-- Populated by JavaScript -->
-            </div>
+            <div class="grid" id="regionalRisk"></div>
         </div>
 
-        <!-- RECOMMENDATIONS TAB -->
-        <div id="recommendations" class="tab-content">
-            <h2 class="section-title">🎯 Integrated Trading Plan</h2>
-            
-            <div id="tradingPlan">
-                <!-- Populated by JavaScript -->
-            </div>
-
+        <!-- TRADING PLAN TAB -->
+        <div id="plan" class="tab-content">
+            <h2 class="section-title">🎯 Your Integrated Trading Plan</h2>
+            <div id="tradingPlan"></div>
             <h2 class="section-title">📅 This Week's Critical Events</h2>
-            <table id="weeklyCalendar">
-                <!-- Populated by JavaScript -->
-            </table>
-
+            <table id="weeklyCalendar"></table>
             <div class="help-box" style="margin-top: 30px;">
                 <div class="help-title">💡 How to Use This Dashboard</div>
-                <div style="color: #cbd5e1; line-height: 1.8;">
+                <div style="color: #cbd5e1; line-height: 1.9;">
                     <p><strong>Daily Routine (5 minutes):</strong></p>
-                    <ol style="margin-left: 20px; margin-top: 10px;">
-                        <li>Check <strong>Overview</strong> tab - Overall market sentiment</li>
-                        <li>Review <strong>Trading Plan</strong> tab - Today's actionable recommendations</li>
-                        <li>Check <strong>Technical</strong> - Entry/exit points</li>
-                        <li>Scan <strong>Macro</strong> and <strong>Geopolitical</strong> for major changes</li>
+                    <ol style="margin-left: 20px; margin-top: 12px;">
+                        <li><strong>Overview Tab:</strong> Check overall score & recommendation</li>
+                        <li><strong>Trading Plan Tab:</strong> Read today's action items</li>
+                        <li><strong>Scan Other Tabs:</strong> Look for major changes</li>
+                        <li><strong>Execute:</strong> Follow the integrated plan</li>
                     </ol>
-                    <p style="margin-top: 15px;"><strong>Before ANY Trade:</strong></p>
-                    <ul style="margin-left: 20px; margin-top: 10px;">
-                        <li>All 3 analyses aligned? (Technical + Macro + Geo all green = GO)</li>
-                        <li>Any red flags in geopolitical events?</li>
-                        <li>Is macro environment supportive?</li>
-                        <li>What do technical indicators say about timing?</li>
+                    <p style="margin-top: 18px;"><strong>Before ANY Trade:</strong></p>
+                    <ul style="margin-left: 20px; margin-top: 12px;">
+                        <li>Check if all 3 analyses align (Technical + Macro + Geo)</li>
+                        <li>Review geopolitical events for red flags</li>
+                        <li>Confirm macro environment is supportive</li>
+                        <li>Use technical for precise entry/exit timing</li>
                     </ul>
+                    <p style="margin-top: 18px; padding: 18px; background: rgba(239, 68, 68, 0.1); border-radius: 12px; border-left: 4px solid #ef4444;">
+                        <strong style="color: #fca5a5;">⚠️ Golden Rule:</strong>
+                        <span> If macro is against you (Fed hiking + DXY rising + M2 falling), DON'T TRADE crypto regardless of technical signals. The macro tide overpowers everything.</span>
+                    </p>
                 </div>
             </div>
         </div>
@@ -518,158 +534,200 @@
         // Update timestamp
         function updateTimestamp() {
             const now = new Date();
-            document.getElementById('lastUpdate').textContent = 'Last Updated: ' + now.toLocaleString();
+            document.getElementById('lastUpdate').textContent = 'Last Updated: ' + now.toLocaleString('en-US', { 
+                month: 'short', 
+                day: 'numeric', 
+                hour: '2-digit', 
+                minute: '2-digit' 
+            });
         }
         updateTimestamp();
 
-        // Integrated Data
+        // Complete Market Data
         const marketData = {
             technical: {
-                btc: {
-                    price: 104500,
-                    change24h: 2.3,
-                    rsi: 58,
-                    macd: 'Bullish',
-                    ma20: 102000,
-                    ma50: 98000,
-                    signal: 3
+                btc: { 
+                    price: 104500, change24h: 2.3, volume24h: 28500000000,
+                    rsi: 58, macd: 'Bullish', ma20: 102000, ma50: 98000, 
+                    bb_upper: 108000, bb_lower: 100000, signal: 3,
+                    onchain: { exchangeNetflow: -2400, activeAddresses: 985000, hashRate: 525, whaleTransactions: 142 },
+                    whales: { largeTransfers: 28, direction: 'accumulating', topWallets: '+1.2%' },
+                    sentiment: { fearGreed: 68, socialVolume: 'High', trendingRank: 1 }
                 },
-                eth: {
-                    price: 3850,
-                    change24h: 1.8,
-                    rsi: 61,
-                    signal: 2
+                eth: { 
+                    price: 3850, change24h: 1.8, volume24h: 15200000000,
+                    rsi: 61, macd: 'Bullish', ma20: 3780, ma50: 3650,
+                    bb_upper: 3950, bb_lower: 3720, signal: 2,
+                    onchain: { exchangeNetflow: -890, activeAddresses: 542000, gasPrice: 28, whaleTransactions: 85 },
+                    whales: { largeTransfers: 18, direction: 'accumulating', topWallets: '+0.8%' },
+                    sentiment: { fearGreed: 65, socialVolume: 'High', trendingRank: 2 }
+                },
+                sol: { 
+                    price: 142, change24h: 3.2, volume24h: 3800000000,
+                    rsi: 65, macd: 'Bullish', ma20: 138, ma50: 132,
+                    bb_upper: 148, bb_lower: 134, signal: 3,
+                    onchain: { exchangeNetflow: -124, activeAddresses: 1250000, tps: 3500, whaleTransactions: 52 },
+                    whales: { largeTransfers: 12, direction: 'accumulating', topWallets: '+1.5%' },
+                    sentiment: { fearGreed: 72, socialVolume: 'Very High', trendingRank: 3 }
+                },
+                bnb: { 
+                    price: 385, change24h: 1.5, volume24h: 1200000000,
+                    rsi: 56, macd: 'Neutral', ma20: 380, ma50: 372,
+                    bb_upper: 395, bb_lower: 370, signal: 2,
+                    onchain: { exchangeNetflow: 45, activeAddresses: 850000, burnRate: 1250000, whaleTransactions: 38 },
+                    whales: { largeTransfers: 8, direction: 'distributing', topWallets: '-0.3%' },
+                    sentiment: { fearGreed: 58, socialVolume: 'Moderate', trendingRank: 5 }
+                },
+                xrp: { 
+                    price: 0.68, change24h: 0.8, volume24h: 2100000000,
+                    rsi: 52, macd: 'Neutral', ma20: 0.67, ma50: 0.65,
+                    bb_upper: 0.71, bb_lower: 0.64, signal: 1,
+                    onchain: { exchangeNetflow: 125, activeAddresses: 420000, ledgerClose: 3.5, whaleTransactions: 24 },
+                    whales: { largeTransfers: 15, direction: 'distributing', topWallets: '-0.5%' },
+                    sentiment: { fearGreed: 54, socialVolume: 'Moderate', trendingRank: 7 }
+                },
+                ada: { 
+                    price: 0.54, change24h: 2.1, volume24h: 850000000,
+                    rsi: 59, macd: 'Bullish', ma20: 0.52, ma50: 0.49,
+                    bb_upper: 0.57, bb_lower: 0.51, signal: 2,
+                    onchain: { exchangeNetflow: -85, activeAddresses: 380000, stakeRate: 71.5, whaleTransactions: 18 },
+                    whales: { largeTransfers: 6, direction: 'accumulating', topWallets: '+0.4%' },
+                    sentiment: { fearGreed: 62, socialVolume: 'Low', trendingRank: 12 }
+                },
+                doge: {
+                    price: 0.082, change24h: 5.2, volume24h: 950000000,
+                    rsi: 68, macd: 'Bullish', ma20: 0.078, ma50: 0.074,
+                    bb_upper: 0.088, bb_lower: 0.076, signal: 3,
+                    onchain: { exchangeNetflow: -245, activeAddresses: 125000, largeHolders: 82, whaleTransactions: 45 },
+                    whales: { largeTransfers: 22, direction: 'accumulating', topWallets: '+2.1%' },
+                    sentiment: { fearGreed: 75, socialVolume: 'Very High', trendingRank: 4 }
+                },
+                sui: {
+                    price: 4.82, change24h: 4.5, volume24h: 1850000000,
+                    rsi: 71, macd: 'Bullish', ma20: 4.65, ma50: 4.35,
+                    bb_upper: 5.10, bb_lower: 4.55, signal: 4,
+                    onchain: { exchangeNetflow: -180, activeAddresses: 285000, tps: 850, whaleTransactions: 35 },
+                    whales: { largeTransfers: 18, direction: 'strong accumulation', topWallets: '+3.2%' },
+                    sentiment: { fearGreed: 78, socialVolume: 'Very High', trendingRank: 6 }
                 }
             },
             macro: {
-                fedRate: { value: '5.50%', trend: 'stable', score: -2 },
-                inflation: { value: '3.2%', trend: 'down', score: 1 },
-                dxy: { value: 104.2, trend: 'down', score: 2 },
-                m2: { value: '$21.1T', trend: 'stable', score: 0 },
-                gdp: { value: '2.1%', trend: 'down', score: 0 },
-                yields: { value: '4.65%', trend: 'down', score: 1 }
+                fedRate: { value: '5.50%', trend: 'stable', score: -2, change: '0.00%' },
+                inflation: { value: '3.2%', trend: 'down', score: 1, change: '-0.5%' },
+                dxy: { value: 104.2, trend: 'down', score: 2, change: '-2.3' },
+                m2: { value: '$21.1T', trend: 'stable', score: 0, change: '0.0%' },
+                gdp: { value: '2.1%', trend: 'down', score: 0, change: '-0.3%' },
+                yields: { value: '4.65%', trend: 'down', score: 1, change: '-0.37%' },
+                unemployment: { value: '3.9%', trend: 'up', score: 1, change: '+0.2%' },
+                vix: { value: 18.5, trend: 'up', score: 0, change: '+2.1' }
             },
             geopolitical: {
                 globalRisk: 'HIGH',
-                activeEvents: 3,
-                criticalEvents: 1
+                activeEvents: 4,
+                criticalEvents: 2
             }
         };
 
-        // Calculate overall scores
+        // Calculate comprehensive scores
         function calculateOverallScore() {
-            // Technical score (out of 5)
+            // Technical score (-5 to +5)
             const technicalScore = marketData.technical.btc.signal;
             
-            // Macro score (sum of all indicator scores)
+            // Macro score (sum of all, normalize to -3 to +3)
             const macroScoreRaw = Object.values(marketData.macro).reduce((sum, ind) => sum + (ind.score || 0), 0);
-            const macroScore = Math.max(-3, Math.min(3, macroScoreRaw)); // Normalize to -3 to +3
+            const macroScore = Math.max(-3, Math.min(3, macroScoreRaw));
             
-            // Geopolitical score (inverse of risk)
+            // Geopolitical score (-2 to +2)
             const geoScore = marketData.geopolitical.globalRisk === 'LOW' ? 2 : 
                             marketData.geopolitical.globalRisk === 'MODERATE' ? 0 : -2;
             
-            // Overall score
+            // Total score (-10 to +10)
             const totalScore = technicalScore + macroScore + geoScore;
             
-            let sentiment = 'NEUTRAL';
-            let sentimentClass = 'neutral';
-            let recommendation = 'Small positions only. Mixed signals.';
+            let sentiment, sentimentClass, recommendation;
             
-            if (totalScore >= 4) {
+            if (totalScore >= 5) {
                 sentiment = 'VERY BULLISH';
                 sentimentClass = 'bullish';
-                recommendation = 'Strong buy signals across all analyses. Consider 5% positions.';
+                recommendation = 'Strong buy signals across ALL analyses. Excellent opportunity. Consider 5% positions.';
             } else if (totalScore >= 2) {
                 sentiment = 'BULLISH';
                 sentimentClass = 'bullish';
-                recommendation = 'Favorable conditions. Consider 3-4% positions.';
-            } else if (totalScore <= -4) {
+                recommendation = 'Favorable conditions with multiple positive factors. Consider 3-4% positions.';
+            } else if (totalScore <= -5) {
                 sentiment = 'VERY BEARISH';
                 sentimentClass = 'bearish';
-                recommendation = 'High risk environment. Defensive positioning recommended.';
+                recommendation = 'High risk environment across all metrics. Defensive positioning strongly recommended.';
             } else if (totalScore <= -2) {
                 sentiment = 'BEARISH';
                 sentimentClass = 'bearish';
-                recommendation = 'Challenging conditions. Reduce exposure or wait.';
+                recommendation = 'Challenging conditions with multiple headwinds. Reduce exposure significantly or wait.';
+            } else {
+                sentiment = 'NEUTRAL';
+                sentimentClass = 'neutral';
+                recommendation = 'Mixed signals - some positive, some negative. Trade selectively with reduced size.';
             }
             
-            return {
-                technical: technicalScore,
-                macro: macroScore,
-                geopolitical: geoScore,
-                total: totalScore,
-                sentiment,
-                sentimentClass,
-                recommendation
-            };
+            return { technical: technicalScore, macro: macroScore, geopolitical: geoScore, total: totalScore, sentiment, sentimentClass, recommendation };
         }
 
-        // Render overall score
+        // Render all sections
         function renderOverallScore() {
             const score = calculateOverallScore();
-            const container = document.getElementById('overallScore');
-            
-            container.innerHTML = `
+            document.getElementById('overallScore').innerHTML = `
                 <div class="score-card">
-                    <div class="score-label">Overall Sentiment</div>
+                    <div class="score-label">Overall Market Sentiment</div>
                     <div class="score-value score-${score.sentimentClass}">${score.sentiment}</div>
-                    <div style="font-size: 0.9em; color: #94a3b8; margin-top: 5px;">Score: ${score.total}/10</div>
+                    <div class="score-sub">Combined Score: ${score.total}/10</div>
                 </div>
                 <div class="score-card">
-                    <div class="score-label">Technical Score</div>
+                    <div class="score-label">Technical Analysis</div>
                     <div class="score-value score-${score.technical > 0 ? 'bullish' : score.technical < 0 ? 'bearish' : 'neutral'}">${score.technical > 0 ? '+' : ''}${score.technical}/5</div>
-                    <div style="font-size: 0.9em; color: #94a3b8; margin-top: 5px;">
-                        ${score.technical > 2 ? 'Strong buy signals' : score.technical > 0 ? 'Moderate buy' : score.technical < -2 ? 'Strong sell' : score.technical < 0 ? 'Weak' : 'Neutral'}
-                    </div>
+                    <div class="score-sub">${score.technical > 2 ? 'Strong signals' : score.technical > 0 ? 'Moderate' : score.technical < -2 ? 'Weak/Sell' : 'Neutral'}</div>
                 </div>
                 <div class="score-card">
-                    <div class="score-label">Macro Score</div>
+                    <div class="score-label">Macroeconomic</div>
                     <div class="score-value score-${score.macro > 0 ? 'bullish' : score.macro < 0 ? 'bearish' : 'neutral'}">${score.macro > 0 ? '+' : ''}${score.macro}/3</div>
-                    <div style="font-size: 0.9em; color: #94a3b8; margin-top: 5px;">
-                        ${score.macro > 1 ? 'Supportive' : score.macro < -1 ? 'Headwinds' : 'Mixed'}
-                    </div>
+                    <div class="score-sub">${score.macro > 1 ? 'Supportive' : score.macro < -1 ? 'Headwinds' : 'Mixed conditions'}</div>
                 </div>
                 <div class="score-card">
                     <div class="score-label">Geopolitical Risk</div>
                     <div class="score-value score-${score.geopolitical > 0 ? 'bullish' : score.geopolitical < 0 ? 'bearish' : 'neutral'}">${marketData.geopolitical.globalRisk}</div>
-                    <div style="font-size: 0.9em; color: #94a3b8; margin-top: 5px;">
-                        ${marketData.geopolitical.activeEvents} active events
-                    </div>
+                    <div class="score-sub">${marketData.geopolitical.activeEvents} active tensions</div>
                 </div>
             `;
         }
 
-        // Render summary recommendation
         function renderSummaryRecommendation() {
             const score = calculateOverallScore();
-            const container = document.getElementById('summaryRecommendation');
+            const boxClass = score.sentimentClass === 'bullish' ? '' : score.sentimentClass === 'bearish' ? 'bearish' : 'neutral';
             
-            const boxClass = score.sentimentClass === 'bullish' ? '' : score.sentimentClass === 'bearish' ? 'bearish' : '';
-            
-            container.innerHTML = `
+            document.getElementById('summaryRecommendation').innerHTML = `
                 <div class="recommendation-box ${boxClass}">
-                    <div class="recommendation-title">${score.sentiment} Market Environment</div>
-                    <p style="color: #cbd5e1; margin-bottom: 15px; line-height: 1.7;">
+                    <div class="recommendation-title">${score.sentiment} MARKET ENVIRONMENT</div>
+                    <p style="color: #cbd5e1; margin-bottom: 20px; line-height: 1.8; font-size: 1.1em;">
                         ${score.recommendation}
                     </p>
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; margin-top: 20px;">
-                        <div>
-                            <strong style="color: #60a5fa;">Technical:</strong>
-                            <p style="color: #94a3b8; margin-top: 5px;">
-                                BTC signal: ${score.technical}/5 • RSI: ${marketData.technical.btc.rsi} • MACD: ${marketData.technical.btc.macd}
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-top: 25px;">
+                        <div style="background: rgba(59, 130, 246, 0.08); padding: 20px; border-radius: 14px; border-left: 4px solid #60a5fa;">
+                            <strong style="color: #60a5fa; font-size: 1.15em;">📈 Technical</strong>
+                            <p style="color: #94a3b8; margin-top: 10px; line-height: 1.7;">
+                                Signal: ${score.technical}/5 • RSI: ${marketData.technical.btc.rsi} • MACD: ${marketData.technical.btc.macd}<br>
+                                MA-20 Cross: ${marketData.technical.btc.price > marketData.technical.btc.ma20 ? '✅ Bullish' : '❌ Bearish'}
                             </p>
                         </div>
-                        <div>
-                            <strong style="color: #60a5fa;">Macro:</strong>
-                            <p style="color: #94a3b8; margin-top: 5px;">
-                                Fed: ${marketData.macro.fedRate.value} • DXY: ${marketData.macro.dxy.value} (${marketData.macro.dxy.trend === 'down' ? '↓ good' : '↑ bad'})
+                        <div style="background: rgba(139, 92, 246, 0.08); padding: 20px; border-radius: 14px; border-left: 4px solid #a78bfa;">
+                            <strong style="color: #a78bfa; font-size: 1.15em;">🏦 Macro</strong>
+                            <p style="color: #94a3b8; margin-top: 10px; line-height: 1.7;">
+                                Fed: ${marketData.macro.fedRate.value} • DXY: ${marketData.macro.dxy.value} (${marketData.macro.dxy.trend === 'down' ? '↓ bullish' : '↑ bearish'})<br>
+                                M2: ${marketData.macro.m2.value} • CPI: ${marketData.macro.inflation.value}
                             </p>
                         </div>
-                        <div>
-                            <strong style="color: #60a5fa;">Geopolitical:</strong>
-                            <p style="color: #94a3b8; margin-top: 5px;">
-                                Global risk: ${marketData.geopolitical.globalRisk} • ${marketData.geopolitical.activeEvents} active tensions
+                        <div style="background: rgba(236, 72, 153, 0.08); padding: 20px; border-radius: 14px; border-left: 4px solid #ec4899;">
+                            <strong style="color: #f472b6; font-size: 1.15em;">🌍 Geopolitical</strong>
+                            <p style="color: #94a3b8; margin-top: 10px; line-height: 1.7;">
+                                Risk Level: ${marketData.geopolitical.globalRisk}<br>
+                                Active Events: ${marketData.geopolitical.activeEvents} (${marketData.geopolitical.criticalEvents} critical)
                             </p>
                         </div>
                     </div>
@@ -677,46 +735,44 @@
             `;
         }
 
-        // Render quick metrics
         function renderQuickMetrics() {
-            const container = document.getElementById('quickMetrics');
-            
-            container.innerHTML = `
+            document.getElementById('quickMetrics').innerHTML = `
                 <div class="card">
                     <div class="card-header">
-                        <div class="card-title">Bitcoin</div>
+                        <div class="card-title">Bitcoin (BTC)</div>
                         <span class="badge badge-bullish">BUY +${marketData.technical.btc.signal}</span>
                     </div>
                     <div class="metric-value value-bullish">$${marketData.technical.btc.price.toLocaleString()}</div>
-                    <div style="text-align: center; color: #10b981; font-weight: 700; margin-bottom: 15px;">
+                    <div style="text-align: center; color: #10b981; font-weight: 800; margin-bottom: 18px; font-size: 1.15em;">
                         +${marketData.technical.btc.change24h}% (24h)
                     </div>
                     <div class="info-box">
-                        <div class="info-title">Technical Analysis</div>
+                        <div class="info-title">Technical Signals</div>
                         <div class="info-text">
-                            RSI: ${marketData.technical.btc.rsi} (Neutral)<br>
-                            MACD: ${marketData.technical.btc.macd}<br>
-                            Price > MA-20: ✅ Bullish<br>
-                            Golden Cross: Active
+                            <strong>RSI:</strong> ${marketData.technical.btc.rsi} (Neutral zone)<br>
+                            <strong>MACD:</strong> ${marketData.technical.btc.macd} trend<br>
+                            <strong>Price:</strong> Above MA-20 ✅<br>
+                            <strong>Golden Cross:</strong> Active (very bullish)
                         </div>
                     </div>
                 </div>
 
                 <div class="card">
                     <div class="card-header">
-                        <div class="card-title">Fed Funds Rate</div>
+                        <div class="card-title">Federal Funds Rate</div>
                         <span class="badge badge-bearish">RESTRICTIVE</span>
                     </div>
                     <div class="metric-value value-bearish">${marketData.macro.fedRate.value}</div>
-                    <div style="text-align: center; color: #94a3b8; font-weight: 600; margin-bottom: 15px;">
-                        Paused (was hiking)
+                    <div style="text-align: center; color: #94a3b8; font-weight: 700; margin-bottom: 18px;">
+                        ${marketData.macro.fedRate.change} (Paused)
                     </div>
                     <div class="info-box">
-                        <div class="info-title">Impact</div>
+                        <div class="info-title">Macro Impact</div>
                         <div class="info-text">
-                            High rates = expensive money<br>
-                            Bearish for crypto short-term<br>
-                            Watch for rate cuts Q2 2025
+                            <strong>Status:</strong> At restrictive levels<br>
+                            <strong>Impact:</strong> Bearish for crypto (-15%)<br>
+                            <strong>Outlook:</strong> Potential cuts Q2 2025<br>
+                            <strong>Strategy:</strong> Watch for Fed pivot signals
                         </div>
                     </div>
                 </div>
@@ -727,26 +783,24 @@
                         <span class="badge badge-bearish">HIGH</span>
                     </div>
                     <div class="metric-value value-bearish">${marketData.geopolitical.activeEvents}</div>
-                    <div style="text-align: center; color: #94a3b8; font-weight: 600; margin-bottom: 15px;">
-                        Active tensions
+                    <div style="text-align: center; color: #94a3b8; font-weight: 700; margin-bottom: 18px;">
+                        Active Tensions
                     </div>
                     <div class="info-box">
                         <div class="info-title">Key Events</div>
                         <div class="info-text">
-                            Middle East tensions<br>
-                            China-Taiwan concerns<br>
-                            Russia sanctions expanding
+                            <strong>Middle East:</strong> Oil supply concerns<br>
+                            <strong>China-Taiwan:</strong> Tech sector risk<br>
+                            <strong>Russia:</strong> Ongoing sanctions<br>
+                            <strong>Strategy:</strong> Hedge with 10-15% gold
                         </div>
                     </div>
                 </div>
             `;
         }
 
-        // Render technical indicators (simplified)
         function renderTechnicalIndicators() {
-            const container = document.getElementById('technicalIndicators');
-            
-            container.innerHTML = `
+            document.getElementById('technicalIndicators').innerHTML = `
                 <div class="card">
                     <div class="card-header">
                         <div class="card-title">RSI (Relative Strength)</div>
@@ -754,12 +808,13 @@
                     </div>
                     <div class="metric-value value-neutral">${marketData.technical.btc.rsi}</div>
                     <div class="info-box">
-                        <div class="info-title">Interpretation</div>
+                        <div class="info-title">Interpretation Guide</div>
                         <div class="info-text">
-                            < 30: Oversold (buy)<br>
-                            30-70: Normal range<br>
-                            > 70: Overbought (sell)<br><br>
-                            <strong>Current:</strong> Neutral zone, no extreme signals
+                            <strong>Below 30:</strong> Oversold (buy signal)<br>
+                            <strong>30-50:</strong> Bearish momentum<br>
+                            <strong>50-70:</strong> Bullish momentum ✅<br>
+                            <strong>Above 70:</strong> Overbought (sell signal)<br><br>
+                            <strong>Current:</strong> Healthy uptrend zone. No extreme signals. Room to move higher.
                         </div>
                     </div>
                 </div>
@@ -769,14 +824,15 @@
                         <div class="card-title">MACD</div>
                         <span class="badge badge-bullish">BULLISH</span>
                     </div>
-                    <div class="metric-value value-bullish">POSITIVE</div>
+                    <div class="metric-value value-bullish">${marketData.technical.btc.macd.toUpperCase()}</div>
                     <div class="info-box">
-                        <div class="info-title">Interpretation</div>
+                        <div class="info-title">Signal Analysis</div>
                         <div class="info-text">
-                            MACD above signal line = bullish<br>
-                            Positive momentum trending<br>
-                            Crossover signal active<br><br>
-                            <strong>Action:</strong> Confirms uptrend
+                            <strong>MACD Line:</strong> Above signal line ✅<br>
+                            <strong>Histogram:</strong> Positive (green bars)<br>
+                            <strong>Crossover:</strong> Recent bullish cross<br>
+                            <strong>Momentum:</strong> Strengthening upward<br><br>
+                            <strong>Action:</strong> Confirms strong uptrend. Safe to enter on dips.
                         </div>
                     </div>
                 </div>
@@ -788,192 +844,457 @@
                     </div>
                     <div class="metric-value value-bullish">ALIGNED</div>
                     <div class="info-box">
-                        <div class="info-title">Interpretation</div>
+                        <div class="info-title">Trend Analysis</div>
                         <div class="info-text">
-                            MA-20: $${marketData.technical.btc.ma20.toLocaleString()}<br>
-                            MA-50: $${marketData.technical.btc.ma50.toLocaleString()}<br>
-                            Price above both ✅<br>
-                            Golden Cross active = very bullish
+                            <strong>MA-20:</strong> $${marketData.technical.btc.ma20.toLocaleString()}<br>
+                            <strong>MA-50:</strong> $${marketData.technical.btc.ma50.toLocaleString()}<br>
+                            <strong>Current Price:</strong> $${marketData.technical.btc.price.toLocaleString()}<br><br>
+                            <strong>Setup:</strong> Price > MA-20 > MA-50 ✅<br>
+                            <strong>Signal:</strong> Golden Cross = Very Bullish<br>
+                            <strong>Support:</strong> MA-20 acts as support at $${marketData.technical.btc.ma20.toLocaleString()}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">Bollinger Bands</div>
+                        <span class="badge badge-neutral">NORMAL</span>
+                    </div>
+                    <div class="metric-value value-neutral">MID-RANGE</div>
+                    <div class="info-box">
+                        <div class="info-title">Volatility Analysis</div>
+                        <div class="info-text">
+                            <strong>Upper Band:</strong> $${marketData.technical.btc.bb_upper.toLocaleString()}<br>
+                            <strong>Lower Band:</strong> $${marketData.technical.btc.bb_lower.toLocaleString()}<br>
+                            <strong>Current:</strong> $${marketData.technical.btc.price.toLocaleString()}<br><br>
+                            <strong>Position:</strong> Mid-range (healthy)<br>
+                            <strong>Volatility:</strong> Normal expansion<br>
+                            <strong>Signal:</strong> Room to move to upper band
                         </div>
                     </div>
                 </div>
             `;
         }
 
-        // Render macro indicators (simplified)
+        function renderCryptoMarket() {
+            const cryptos = [
+                { name: 'Bitcoin (BTC)', symbol: 'BTC', ...marketData.technical.btc },
+                { name: 'Ethereum (ETH)', symbol: 'ETH', ...marketData.technical.eth },
+                { name: 'Solana (SOL)', symbol: 'SOL', ...marketData.technical.sol },
+                { name: 'BNB', symbol: 'BNB', ...marketData.technical.bnb },
+                { name: 'XRP', symbol: 'XRP', ...marketData.technical.xrp },
+                { name: 'Cardano (ADA)', symbol: 'ADA', ...marketData.technical.ada },
+                { name: 'Dogecoin (DOGE)', symbol: 'DOGE', ...marketData.technical.doge },
+                { name: 'Sui (SUI)', symbol: 'SUI', ...marketData.technical.sui }
+            ];
+
+            document.getElementById('cryptoMarket').innerHTML = cryptos.map(crypto => {
+                const signalText = crypto.signal >= 4 ? 'VERY STRONG BUY' : crypto.signal >= 3 ? 'STRONG BUY' : crypto.signal >= 1 ? 'BUY' : crypto.signal <= -3 ? 'STRONG SELL' : crypto.signal <= -1 ? 'SELL' : 'HOLD';
+                const signalClass = crypto.signal >= 1 ? 'bullish' : crypto.signal <= -1 ? 'bearish' : 'neutral';
+                const changeClass = crypto.change24h > 0 ? 'value-bullish' : 'value-bearish';
+                
+                // RSI interpretation
+                const rsiStatus = crypto.rsi > 70 ? 'Overbought ⚠️' : crypto.rsi < 30 ? 'Oversold 🟢' : crypto.rsi > 50 ? 'Bullish' : 'Bearish';
+                const rsiColor = crypto.rsi > 70 ? '#f59e0b' : crypto.rsi < 30 ? '#10b981' : crypto.rsi > 50 ? '#22c55e' : '#ef4444';
+                
+                // Whale activity
+                const whaleStatus = crypto.whales.direction.includes('accumulating') ? '🐋 Accumulating' : 
+                                   crypto.whales.direction.includes('distributing') ? '📉 Distributing' : '➡️ Neutral';
+                const whaleColor = crypto.whales.direction.includes('accumulating') ? '#10b981' : 
+                                  crypto.whales.direction.includes('distributing') ? '#ef4444' : '#f59e0b';
+                
+                // Sentiment
+                const sentimentStatus = crypto.sentiment.fearGreed > 70 ? 'Extreme Greed' : 
+                                       crypto.sentiment.fearGreed > 55 ? 'Greed' : 
+                                       crypto.sentiment.fearGreed > 45 ? 'Neutral' : 
+                                       crypto.sentiment.fearGreed > 30 ? 'Fear' : 'Extreme Fear';
+                const sentimentColor = crypto.sentiment.fearGreed > 70 ? '#ef4444' : 
+                                      crypto.sentiment.fearGreed > 55 ? '#f59e0b' : 
+                                      crypto.sentiment.fearGreed > 45 ? '#60a5fa' : 
+                                      crypto.sentiment.fearGreed > 30 ? '#22c55e' : '#10b981';
+                
+                return `
+                    <div class="card" style="min-height: 600px;">
+                        <div class="card-header">
+                            <div>
+                                <div class="card-title">${crypto.name}</div>
+                                <div style="font-size: 0.85em; color: #94a3b8; margin-top: 5px;">
+                                    24h Volume: $${(crypto.volume24h / 1000000000).toFixed(2)}B
+                                </div>
+                            </div>
+                            <span class="badge badge-${signalClass}">${signalText}</span>
+                        </div>
+                        
+                        <div class="crypto-price ${changeClass}">$${crypto.price.toLocaleString()}</div>
+                        <div style="text-align: center; font-size: 1.15em; font-weight: 800; color: ${crypto.change24h > 0 ? '#10b981' : '#ef4444'}; margin-bottom: 20px;">
+                            ${crypto.change24h > 0 ? '+' : ''}${crypto.change24h}% (24h)
+                        </div>
+                        
+                        <!-- Technical Indicators -->
+                        <div class="info-box">
+                            <div class="info-title">📊 Technical Indicators</div>
+                            <div class="info-text">
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px;">
+                                    <div>
+                                        <strong>RSI:</strong> <span style="color: ${rsiColor};">${crypto.rsi}</span><br>
+                                        <span style="font-size: 0.85em; color: ${rsiColor};">${rsiStatus}</span>
+                                    </div>
+                                    <div>
+                                        <strong>MACD:</strong> <span style="color: ${crypto.macd === 'Bullish' ? '#10b981' : crypto.macd === 'Bearish' ? '#ef4444' : '#f59e0b'};">${crypto.macd}</span>
+                                    </div>
+                                    <div>
+                                        <strong>MA-20:</strong> $${crypto.ma20.toLocaleString()}<br>
+                                        <span style="font-size: 0.85em; color: ${crypto.price > crypto.ma20 ? '#10b981' : '#ef4444'};">
+                                            ${crypto.price > crypto.ma20 ? '✅ Above' : '❌ Below'}
+                                        </span>
+                                    </div>
+                                    <div>
+                                        <strong>MA-50:</strong> $${crypto.ma50.toLocaleString()}<br>
+                                        <span style="font-size: 0.85em; color: ${crypto.price > crypto.ma50 ? '#10b981' : '#ef4444'};">
+                                            ${crypto.price > crypto.ma50 ? '✅ Above' : '❌ Below'}
+                                        </span>
+                                    </div>
+                                    <div>
+                                        <strong>BB Upper:</strong> $${crypto.bb_upper.toLocaleString()}
+                                    </div>
+                                    <div>
+                                        <strong>BB Lower:</strong> $${crypto.bb_lower.toLocaleString()}
+                                    </div>
+                                </div>
+                                <div style="margin-top: 12px; padding: 10px; background: rgba(59, 130, 246, 0.1); border-radius: 8px;">
+                                    <strong style="color: #60a5fa;">Signal Strength:</strong> 
+                                    <span style="color: ${crypto.signal >= 1 ? '#10b981' : crypto.signal <= -1 ? '#ef4444' : '#f59e0b'}; font-weight: 800;">
+                                        ${crypto.signal > 0 ? '+' : ''}${crypto.signal}/5
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- On-Chain Metrics -->
+                        <div class="info-box" style="margin-top: 15px; background: rgba(139, 92, 246, 0.08); border-color: rgba(139, 92, 246, 0.2);">
+                            <div class="info-title" style="color: #a78bfa;">⛓️ On-Chain Metrics</div>
+                            <div class="info-text">
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px; font-size: 0.95em;">
+                                    <div>
+                                        <strong>Exchange Netflow:</strong><br>
+                                        <span style="color: ${crypto.onchain.exchangeNetflow < 0 ? '#10b981' : '#ef4444'}; font-weight: 700;">
+                                            ${crypto.onchain.exchangeNetflow > 0 ? '+' : ''}${crypto.onchain.exchangeNetflow}
+                                        </span>
+                                        <span style="font-size: 0.8em; color: #94a3b8;">
+                                            ${crypto.onchain.exchangeNetflow < 0 ? '(Outflow ✅)' : '(Inflow ⚠️)'}
+                                        </span>
+                                    </div>
+                                    <div>
+                                        <strong>Active Addresses:</strong><br>
+                                        <span style="color: #cbd5e1; font-weight: 700;">${crypto.onchain.activeAddresses.toLocaleString()}</span>
+                                    </div>
+                                    <div>
+                                        <strong>Whale Transactions:</strong><br>
+                                        <span style="color: #cbd5e1; font-weight: 700;">${crypto.onchain.whaleTransactions}</span>
+                                        <span style="font-size: 0.8em; color: #94a3b8;">(24h)</span>
+                                    </div>
+                                    ${crypto.symbol === 'BTC' ? `
+                                    <div>
+                                        <strong>Hash Rate:</strong><br>
+                                        <span style="color: #cbd5e1; font-weight: 700;">${crypto.onchain.hashRate} EH/s</span>
+                                    </div>` : ''}
+                                    ${crypto.symbol === 'ETH' ? `
+                                    <div>
+                                        <strong>Gas Price:</strong><br>
+                                        <span style="color: #cbd5e1; font-weight: 700;">${crypto.onchain.gasPrice} Gwei</span>
+                                    </div>` : ''}
+                                    ${crypto.symbol === 'SOL' || crypto.symbol === 'SUI' ? `
+                                    <div>
+                                        <strong>TPS:</strong><br>
+                                        <span style="color: #cbd5e1; font-weight: 700;">${crypto.onchain.tps.toLocaleString()}</span>
+                                    </div>` : ''}
+                                    ${crypto.symbol === 'ADA' ? `
+                                    <div>
+                                        <strong>Stake Rate:</strong><br>
+                                        <span style="color: #cbd5e1; font-weight: 700;">${crypto.onchain.stakeRate}%</span>
+                                    </div>` : ''}
+                                    ${crypto.symbol === 'BNB' ? `
+                                    <div>
+                                        <strong>BNB Burned:</strong><br>
+                                        <span style="color: #cbd5e1; font-weight: 700;">${crypto.onchain.burnRate.toLocaleString()}</span>
+                                    </div>` : ''}
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Whale Activity -->
+                        <div class="info-box" style="margin-top: 15px; background: rgba(236, 72, 153, 0.08); border-color: rgba(236, 72, 153, 0.2);">
+                            <div class="info-title" style="color: #f472b6;">🐋 Whale Activity Tracker</div>
+                            <div class="info-text">
+                                <div style="margin-top: 8px;">
+                                    <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                                        <strong>Status:</strong>
+                                        <span style="color: ${whaleColor}; font-weight: 800;">${whaleStatus}</span>
+                                    </div>
+                                    <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                                        <strong>Large Transfers (24h):</strong>
+                                        <span style="color: #cbd5e1; font-weight: 700;">${crypto.whales.largeTransfers}</span>
+                                    </div>
+                                    <div style="display: flex; justify-content: space-between;">
+                                        <strong>Top 100 Wallets:</strong>
+                                        <span style="color: ${crypto.whales.topWallets.includes('+') ? '#10b981' : '#ef4444'}; font-weight: 800;">
+                                            ${crypto.whales.topWallets}
+                                        </span>
+                                    </div>
+                                </div>
+                                <div style="margin-top: 12px; padding: 10px; background: rgba(0,0,0,0.2); border-radius: 8px; font-size: 0.9em;">
+                                    ${crypto.whales.direction.includes('accumulating') ? 
+                                        '✅ <strong>Whales buying</strong> - Bullish signal' : 
+                                        crypto.whales.direction.includes('distributing') ? 
+                                        '⚠️ <strong>Whales selling</strong> - Bearish signal' : 
+                                        '➡️ <strong>Neutral activity</strong>'}
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Market Sentiment -->
+                        <div class="info-box" style="margin-top: 15px; background: rgba(34, 197, 94, 0.08); border-color: rgba(34, 197, 94, 0.2);">
+                            <div class="info-title" style="color: #22c55e;">💭 Market Sentiment</div>
+                            <div class="info-text">
+                                <div style="margin-top: 8px;">
+                                    <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                                        <strong>Fear & Greed:</strong>
+                                        <span style="color: ${sentimentColor}; font-weight: 800; font-size: 1.1em;">
+                                            ${crypto.sentiment.fearGreed} - ${sentimentStatus}
+                                        </span>
+                                    </div>
+                                    <div style="background: rgba(255,255,255,0.05); height: 10px; border-radius: 5px; overflow: hidden; margin-bottom: 12px;">
+                                        <div style="width: ${crypto.sentiment.fearGreed}%; height: 100%; background: ${sentimentColor}; border-radius: 5px; transition: width 1s ease;"></div>
+                                    </div>
+                                    <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                                        <strong>Social Volume:</strong>
+                                        <span style="color: #cbd5e1; font-weight: 700;">${crypto.sentiment.socialVolume}</span>
+                                    </div>
+                                    <div style="display: flex; justify-content: space-between;">
+                                        <strong>Trending Rank:</strong>
+                                        <span style="color: ${crypto.sentiment.trendingRank <= 3 ? '#10b981' : crypto.sentiment.trendingRank <= 7 ? '#f59e0b' : '#ef4444'}; font-weight: 700;">
+                                            #${crypto.sentiment.trendingRank}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Trading Alert -->
+                        <div style="margin-top: 15px; padding: 15px; background: linear-gradient(135deg, ${crypto.signal >= 3 ? 'rgba(16, 185, 129, 0.15)' : crypto.signal <= -1 ? 'rgba(239, 68, 68, 0.15)' : 'rgba(245, 158, 11, 0.15)'}, ${crypto.signal >= 3 ? 'rgba(16, 185, 129, 0.05)' : crypto.signal <= -1 ? 'rgba(239, 68, 68, 0.05)' : 'rgba(245, 158, 11, 0.05)'}); border-radius: 12px; border-left: 4px solid ${crypto.signal >= 3 ? '#10b981' : crypto.signal <= -1 ? '#ef4444' : '#f59e0b'};">
+                            <div style="font-weight: 800; font-size: 1.1em; margin-bottom: 8px; color: ${crypto.signal >= 3 ? '#10b981' : crypto.signal <= -1 ? '#ef4444' : '#f59e0b'};">
+                                🔔 TRADING ALERT
+                            </div>
+                            <div style="color: #cbd5e1; line-height: 1.6; font-size: 0.95em;">
+                                ${crypto.signal >= 3 ? 
+                                    `<strong>BUY Signal:</strong> Entry $${crypto.price.toLocaleString()} • Stop -8% ($${(crypto.price * 0.92).toFixed(2)}) • TP1 +8% ($${(crypto.price * 1.08).toFixed(2)})` : 
+                                    crypto.signal >= 1 ? 
+                                    `<strong>Moderate BUY:</strong> Small position only. Entry $${crypto.price.toLocaleString()} • Tight stop -6%` :
+                                    crypto.signal <= -2 ?
+                                    `<strong>SELL Signal:</strong> Exit positions or short. Target $${(crypto.price * 0.92).toFixed(2)}` :
+                                    `<strong>HOLD:</strong> No clear signal. Wait for better setup.`}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
         function renderMacroIndicators() {
-            const container = document.getElementById('macroIndicators');
-            
-            container.innerHTML = `
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-title">🏦 Federal Funds Rate</div>
-                        <span class="badge badge-bearish">5.50%</span>
-                    </div>
-                    <div class="info-box">
-                        <div class="info-title">What This Means</div>
-                        <div class="info-text">
-                            At restrictive levels after 11 hikes<br>
-                            High rates = strong USD, expensive money<br>
-                            <strong>Impact:</strong> Bearish for crypto (-15%)<br>
-                            Watch for Fed pivot to rate cuts
-                        </div>
-                    </div>
-                </div>
+            const indicators = [
+                { name: 'Fed Funds Rate', emoji: '🏦', key: 'fedRate', impact: 'Crypto: -15% • Gold: -5% • Stocks: -10%' },
+                { name: 'CPI Inflation', emoji: '📉', key: 'inflation', impact: 'Crypto: +10% • Gold: +12% • Commodities: +15%' },
+                { name: 'DXY (Dollar)', emoji: '💵', key: 'dxy', impact: 'Crypto: +12% • Gold: +10% • Commodities: +8%' },
+                { name: 'M2 Money Supply', emoji: '💰', key: 'm2', impact: 'Crypto: Neutral • All Assets: Stable' },
+                { name: 'GDP Growth', emoji: '📊', key: 'gdp', impact: 'Crypto: +5% • Commodities: -5% • Gold: +4%' },
+                { name: '10Y Treasury', emoji: '📜', key: 'yields', impact: 'Crypto: +8% • Stocks: +10% • Gold: +6%' },
+                { name: 'Unemployment', emoji: '👥', key: 'unemployment', impact: 'Crypto: +8% • Gold: +6% • Consumer: -5%' },
+                { name: 'VIX Fear Index', emoji: '😱', key: 'vix', impact: 'Crypto: -5% • Gold: +6% • Stocks: -7%' }
+            ];
 
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-title">💵 DXY (Dollar Index)</div>
-                        <span class="badge badge-bullish">104.2 ↓</span>
-                    </div>
-                    <div class="info-box">
-                        <div class="info-title">What This Means</div>
-                        <div class="info-text">
-                            Falling from 20-year highs<br>
-                            <strong>Correlation: -0.72 with Bitcoin</strong><br>
-                            Weak dollar = Strong crypto<br>
-                            <strong>Impact:</strong> Bullish for BTC (+12%)
+            document.getElementById('macroIndicators').innerHTML = indicators.map(ind => {
+                const data = marketData.macro[ind.key];
+                const trendClass = data.trend === 'up' ? (ind.key.includes('fed') || ind.key.includes('vix') ? 'bearish' : 'bullish') :
+                                   data.trend === 'down' ? (ind.key.includes('dxy') || ind.key.includes('yield') ? 'bullish' : 'bearish') : 'neutral';
+                const trendText = data.trend === 'up' ? '↑ Rising' : data.trend === 'down' ? '↓ Falling' : '→ Stable';
+                
+                return `
+                    <div class="card">
+                        <div class="card-header">
+                            <div>
+                                <div style="font-size: 2.5em; margin-bottom: 10px;">${ind.emoji}</div>
+                                <div class="card-title">${ind.name}</div>
+                            </div>
+                            <span class="badge badge-${trendClass}">${trendText}</span>
+                        </div>
+                        <div class="metric-value value-${trendClass}">${data.value}</div>
+                        <div style="text-align: center; color: #94a3b8; font-weight: 700; margin-bottom: 18px;">
+                            ${data.change} from previous
+                        </div>
+                        <div class="info-box">
+                            <div class="info-title">Market Impact</div>
+                            <div class="info-text">${ind.impact}</div>
                         </div>
                     </div>
-                </div>
-
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-title">📉 CPI Inflation</div>
-                        <span class="badge badge-neutral">3.2%</span>
-                    </div>
-                    <div class="info-box">
-                        <div class="info-title">What This Means</div>
-                        <div class="info-text">
-                            Above Fed's 2% target but falling<br>
-                            Disinflation = potential rate cuts ahead<br>
-                            <strong>Impact:</strong> Mixed for crypto<br>
-                            Long-term bullish (inflation hedge)
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-title">💰 M2 Money Supply</div>
-                        <span class="badge badge-bearish">$21.1T →</span>
-                    </div>
-                    <div class="info-box">
-                        <div class="info-title">What This Means</div>
-                        <div class="info-text">
-                            <strong>CRITICAL:</strong> Correlation +0.81 with BTC<br>
-                            Stabilizing after historic decline<br>
-                            Not growing yet = no tailwind<br>
-                            If M2 starts growing = Bitcoin moon
-                        </div>
-                    </div>
-                </div>
-            `;
+                `;
+            }).join('');
         }
 
-        // Render geopolitical events (simplified)
-        function renderGeopoliticalEvents() {
-            const container = document.getElementById('geopoliticalEvents');
-            
-            container.innerHTML = `
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-title">Middle East Tensions</div>
-                        <span class="badge badge-bearish">HIGH RISK</span>
-                    </div>
-                    <div class="info-box">
-                        <div class="info-title">Impact Prediction</div>
-                        <div class="info-text">
-                            <strong>Oil:</strong> +8-15% (supply concerns)<br>
-                            <strong>Gold:</strong> +5% (safe haven)<br>
-                            <strong>Bitcoin:</strong> -3% initially, +5% recovery<br>
-                            <strong>Strategy:</strong> Hedge with gold
-                        </div>
-                    </div>
-                </div>
+        function renderMacroScenarios() {
+            const scenarios = [
+                {
+                    name: 'Soft Landing',
+                    prob: '55%',
+                    class: 'bullish',
+                    emoji: '🟢',
+                    desc: 'Fed brings inflation to 2% without recession. GDP stays positive. Rate cuts begin Q2 2025.',
+                    predictions: 'Bitcoin: +35% • Ethereum: +40% • Gold: +15% • Stocks: +20%',
+                    reasoning: 'Rate cuts boost liquidity. Dollar weakens. Best scenario for crypto.'
+                },
+                {
+                    name: 'Recession',
+                    prob: '30%',
+                    class: 'bearish',
+                    emoji: '🔴',
+                    desc: 'High rates break economy. Unemployment spikes. Emergency cuts + stimulus.',
+                    predictions: 'Bitcoin: -25% initially, then +150% • Gold: +25% • Oil: -35%',
+                    reasoning: 'Initial crash, then massive stimulus = Bitcoin moon. COVID 2020 repeat.'
+                },
+                {
+                    name: 'Stagflation',
+                    prob: '15%',
+                    class: 'neutral',
+                    emoji: '🟠',
+                    desc: 'Worst case. Inflation stays high + growth stalls. Fed stuck. 1970s repeat.',
+                    predictions: 'Bitcoin: ±15% choppy • Gold: +35% (KING) • Stocks: -15%',
+                    reasoning: 'Gold dominates. Bitcoin uncertain. Commodities strong.'
+                }
+            ];
 
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-title">Russia Sanctions</div>
-                        <span class="badge badge-neutral">MODERATE</span>
+            document.getElementById('macroScenarios').innerHTML = scenarios.map(s => `
+                <div class="recommendation-box ${s.class}">
+                    <div class="recommendation-title">${s.emoji} ${s.name} (${s.prob} Probability)</div>
+                    <p style="color: #cbd5e1; margin-bottom: 18px; line-height: 1.8;">${s.desc}</p>
+                    <div style="background: rgba(15, 23, 42, 0.6); padding: 18px; border-radius: 12px; margin: 18px 0;">
+                        <strong style="color: #60a5fa; font-size: 1.1em;">12-Month Predictions:</strong>
+                        <p style="color: #cbd5e1; margin-top: 10px; line-height: 1.7;">${s.predictions}</p>
                     </div>
-                    <div class="info-box">
-                        <div class="info-title">Impact Prediction</div>
-                        <div class="info-text">
-                            <strong>Bitcoin:</strong> +6% (sanctions evasion)<br>
-                            <strong>Natural Gas:</strong> +12% (EU supply)<br>
-                            <strong>Gold:</strong> +3% (de-dollarization)<br>
-                            <strong>Strategy:</strong> BTC benefits medium-term
-                        </div>
+                    <div style="padding: 15px; background: rgba(59, 130, 246, 0.08); border-radius: 10px; border-left: 3px solid #60a5fa;">
+                        <strong style="color: #cbd5e1;">Why:</strong>
+                        <p style="color: #94a3b8; margin-top: 8px; line-height: 1.6;">${s.reasoning}</p>
                     </div>
                 </div>
-
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-title">China-Taiwan</div>
-                        <span class="badge badge-bearish">ELEVATED</span>
-                    </div>
-                    <div class="info-box">
-                        <div class="info-title">Impact Prediction</div>
-                        <div class="info-text">
-                            <strong>Bitcoin:</strong> -4% (risk-off)<br>
-                            <strong>Gold:</strong> +5% (safe haven rush)<br>
-                            <strong>Tech Stocks:</strong> -10% (semiconductor)<br>
-                            <strong>Strategy:</strong> Monitor closely
-                        </div>
-                    </div>
-                </div>
-            `;
+            `).join('');
         }
 
-        // Render geopolitical alert
         function renderGeopoliticalAlert() {
-            const container = document.getElementById('geopoliticalAlert');
-            
-            container.innerHTML = `
+            document.getElementById('geopoliticalAlert').innerHTML = `
                 <div class="alert-banner">
-                    <div style="font-size: 2em;">⚠️</div>
+                    <div style="font-size: 2.5em;">⚠️</div>
                     <div>
-                        <strong>Current Global Risk Level:</strong>
-                        <span style="margin-left: 10px; background: white; color: #dc2626; padding: 5px 15px; border-radius: 15px; font-weight: 800;">
+                        <strong style="font-size: 1.2em;">Current Global Risk Level:</strong>
+                        <span style="margin-left: 12px; background: white; color: #dc2626; padding: 8px 20px; border-radius: 18px; font-weight: 900; font-size: 1.1em;">
                             ${marketData.geopolitical.globalRisk}
                         </span>
-                        <div style="margin-top: 5px; font-size: 0.9em;">
-                            ${marketData.geopolitical.activeEvents} active geopolitical tensions affecting markets
+                        <div style="margin-top: 8px; font-size: 0.95em;">
+                            ${marketData.geopolitical.activeEvents} active geopolitical tensions affecting markets globally
                         </div>
                     </div>
                 </div>
             `;
         }
 
-        // Render trading plan
+        function renderGeopoliticalEvents() {
+            const events = [
+                { title: 'Middle East Tensions', severity: 'high', impact: 'Oil: +8% • Gold: +5% • BTC: -3% initially', strategy: 'Hedge with gold. Watch oil for inflation impact.' },
+                { title: 'Russia Sanctions', severity: 'moderate', impact: 'BTC: +6% • Natural Gas: +12% • Gold: +3%', strategy: 'Bitcoin benefits medium-term as sanctions evasion tool.' },
+                { title: 'China-Taiwan', severity: 'high', impact: 'BTC: -4% • Gold: +5% • Tech: -10%', strategy: 'Monitor closely. Semiconductor supply risk.' },
+                { title: 'EU Regulations', severity: 'moderate', impact: 'BTC: ±2% • ETH: +4% • Altcoins: -5%', strategy: 'Clarity long-term positive. Short-term uncertainty.' }
+            ];
+
+            document.getElementById('geopoliticalEvents').innerHTML = events.map(e => {
+                const badgeClass = e.severity === 'high' ? 'bearish' : 'neutral';
+                return `
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">${e.title}</div>
+                            <span class="badge badge-${badgeClass}">${e.severity.toUpperCase()}</span>
+                        </div>
+                        <div class="info-box">
+                            <div class="info-title">Impact Prediction</div>
+                            <div class="info-text">${e.impact}</div>
+                        </div>
+                        <div class="info-box" style="margin-top: 15px; background: rgba(245, 158, 11, 0.08); border-color: rgba(245, 158, 11, 0.2);">
+                            <div class="info-title" style="color: #f59e0b;">Trading Strategy</div>
+                            <div class="info-text">${e.strategy}</div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function renderRegionalRisk() {
+            const regions = [
+                { name: 'Middle East', risk: 85, level: 'critical', factors: 'Oil supply • Shipping lanes • Military conflicts' },
+                { name: 'Asia-Pacific', risk: 75, level: 'high', factors: 'Taiwan tensions • Tech supply • Trade disputes' },
+                { name: 'Eastern Europe', risk: 80, level: 'critical', factors: 'Ongoing war • Energy crisis • Sanctions' },
+                { name: 'North America', risk: 35, level: 'low', factors: 'Stable • Election year • Debt ceiling' },
+                { name: 'Europe', risk: 55, level: 'moderate', factors: 'Energy dependence • Migration • Regulation' },
+                { name: 'Latin America', risk: 45, level: 'moderate', factors: 'Political instability • Inflation • BTC adoption' }
+            ];
+
+            document.getElementById('regionalRisk').innerHTML = regions.map(r => {
+                const levelClass = r.level === 'critical' ? 'bearish' : r.level === 'high' ? 'neutral' : r.level === 'moderate' ? 'neutral' : 'bullish';
+                const barColor = r.level === 'critical' ? '#ef4444' : r.level === 'high' ? '#f97316' : r.level === 'moderate' ? '#f59e0b' : '#22c55e';
+                
+                return `
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">${r.name}</div>
+                            <span class="badge badge-${levelClass}">${r.level.toUpperCase()}</span>
+                        </div>
+                        <div style="margin: 20px 0;">
+                            <div style="background: rgba(255,255,255,0.1); height: 12px; border-radius: 6px; overflow: hidden;">
+                                <div style="width: ${r.risk}%; height: 100%; background: ${barColor}; border-radius: 6px; transition: width 1s ease;"></div>
+                            </div>
+                            <div style="text-align: right; margin-top: 8px; font-weight: 700; color: ${barColor};">${r.risk}% Risk Level</div>
+                        </div>
+                        <div class="info-box">
+                            <div class="info-title">Key Factors</div>
+                            <div class="info-text">${r.factors}</div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
         function renderTradingPlan() {
             const score = calculateOverallScore();
-            const container = document.getElementById('tradingPlan');
-            
             let plan = '';
             
             if (score.total >= 2) {
                 plan = `
                     <div class="recommendation-box">
-                        <div class="recommendation-title">✅ BULLISH ENVIRONMENT - Consider Long Positions</div>
-                        <p style="color: #cbd5e1; margin-bottom: 15px;">
-                            Multiple factors aligned favorably. Good opportunity for strategic entries.
+                        <div class="recommendation-title">✅ BULLISH ENVIRONMENT - Long Positions Recommended</div>
+                        <p style="color: #cbd5e1; margin-bottom: 20px; line-height: 1.8; font-size: 1.1em;">
+                            Multiple positive factors aligned. Good opportunity for strategic entries with proper risk management.
                         </p>
                         <ul class="recommendation-list">
-                            <li><strong>Position Size:</strong> 3-5% of portfolio per trade</li>
-                            <li><strong>Assets to Buy:</strong> Bitcoin, Ethereum (leading indicators bullish)</li>
-                            <li><strong>Entry Strategy:</strong> Market orders on dips, or limit orders 2-3% below current</li>
-                            <li><strong>Take Profit:</strong> TP1 at +8% (25%), TP2 at +15% (25%), TP3 at +25% (30%)</li>
-                            <li><strong>Stop Loss:</strong> -8% from entry (move to breakeven after TP2)</li>
-                            <li><strong>Risk/Reward:</strong> Minimum 1:2 ratio</li>
+                            <li><strong>Position Size:</strong> 3-5% of portfolio per trade (standard bullish size)</li>
+                            <li><strong>Primary Assets:</strong> Bitcoin, Ethereum (both showing bullish technicals + macro improving)</li>
+                            <li><strong>Entry Strategy:</strong> Market orders on any -2% dip, or limit orders 3% below current for better entries</li>
+                            <li><strong>Take Profit Levels:</strong> TP1 at +8% (sell 25%), TP2 at +15% (sell 25%), TP3 at +25% (sell 30%), TP4 trail 20%</li>
+                            <li><strong>Stop Loss:</strong> -8% from entry point (move to breakeven after TP2 hits)</li>
+                            <li><strong>Risk/Reward:</strong> Minimum 1:2 ratio required (ideal 1:3)</li>
+                            <li><strong>Hedge:</strong> Keep 10-15% in gold due to geopolitical risk</li>
                         </ul>
-                        <div style="margin-top: 20px; padding: 15px; background: rgba(59, 130, 246, 0.1); border-radius: 10px; border-left: 3px solid #60a5fa;">
-                            <strong style="color: #60a5fa;">Key Catalysts:</strong>
-                            <ul style="margin-left: 20px; margin-top: 10px; color: #cbd5e1; line-height: 1.7;">
-                                <li>Technical: ${marketData.technical.btc.macd} MACD, RSI in healthy zone</li>
-                                <li>Macro: DXY falling (good for crypto), Fed potentially pausing</li>
-                                <li>Timing: Watch for Fed signals on rate cuts</li>
+                        <div style="margin-top: 25px; padding: 20px; background: rgba(59, 130, 246, 0.1); border-radius: 14px; border-left: 4px solid #60a5fa;">
+                            <strong style="color: #60a5fa; font-size: 1.2em;">Key Bullish Catalysts:</strong>
+                            <ul style="margin-left: 20px; margin-top: 12px; color: #cbd5e1; line-height: 1.9;">
+                                <li><strong>Technical:</strong> ${marketData.technical.btc.macd} MACD, RSI at ${marketData.technical.btc.rsi}, Golden Cross active</li>
+                                <li><strong>Macro:</strong> DXY falling (${marketData.macro.dxy.change}), inflation cooling, Fed potentially pausing</li>
+                                <li><strong>Timing:</strong> Watch for Fed signals on Q2 2025 rate cuts. First cut = major catalyst</li>
                             </ul>
                         </div>
                     </div>
@@ -981,133 +1302,144 @@
             } else if (score.total <= -2) {
                 plan = `
                     <div class="recommendation-box bearish">
-                        <div class="recommendation-title">🛑 BEARISH ENVIRONMENT - Defensive Positioning</div>
-                        <p style="color: #cbd5e1; margin-bottom: 15px;">
-                            Multiple headwinds present. Protect capital and wait for better conditions.
+                        <div class="recommendation-title">🛑 BEARISH ENVIRONMENT - Defensive Positioning Required</div>
+                        <p style="color: #cbd5e1; margin-bottom: 20px; line-height: 1.8; font-size: 1.1em;">
+                            Multiple headwinds present across all analyses. Capital preservation is priority. Wait for better conditions.
                         </p>
                         <ul class="recommendation-list">
-                            <li><strong>Action:</strong> Reduce crypto exposure to 20-30% of portfolio</li>
-                            <li><strong>Hedge:</strong> Allocate 20-30% to gold and stablecoins</li>
-                            <li><strong>New Positions:</strong> WAIT - conditions not favorable</li>
-                            <li><strong>Existing Positions:</strong> Tighten stop losses to -5%</li>
-                            <li><strong>Cash Allocation:</strong> Keep 40-50% dry powder for better opportunities</li>
+                            <li><strong>Immediate Action:</strong> Reduce crypto exposure to 20-30% of total portfolio maximum</li>
+                            <li><strong>Hedge Allocation:</strong> Move 20-30% into gold and 20-30% into stablecoins (USDT/USDC)</li>
+                            <li><strong>New Positions:</strong> AVOID - Conditions not favorable. Wait for score improvement to +2 or better</li>
+                            <li><strong>Existing Positions:</strong> Tighten all stop losses to -5% (from usual -8%) due to higher risk</li>
+                            <li><strong>Cash Position:</strong> Keep 40-50% in dry powder for better opportunities ahead</li>
+                            <li><strong>Review Frequency:</strong> Check dashboard daily for score improvements indicating pivot</li>
                         </ul>
-                        <div style="margin-top: 20px; padding: 15px; background: rgba(239, 68, 68, 0.1); border-radius: 10px; border-left: 3px solid #ef4444;">
-                            <strong style="color: #fca5a5;">Risk Factors:</strong>
-                            <ul style="margin-left: 20px; margin-top: 10px; color: #cbd5e1; line-height: 1.7;">
-                                <li>Macro: High interest rates, strong USD (bearish combo)</li>
-                                <li>Geopolitical: ${marketData.geopolitical.globalRisk} risk environment</li>
-                                <li>Strategy: Preserve capital, wait for Fed pivot signals</li>
+                        <div style="margin-top: 25px; padding: 20px; background: rgba(239, 68, 68, 0.1); border-radius: 14px; border-left: 4px solid #ef4444;">
+                            <strong style="color: #fca5a5; font-size: 1.2em;">Risk Factors to Monitor:</strong>
+                            <ul style="margin-left: 20px; margin-top: 12px; color: #cbd5e1; line-height: 1.9;">
+                                <li><strong>Macro:</strong> High interest rates (${marketData.macro.fedRate.value}), strong USD bearish combination</li>
+                                <li><strong>Geopolitical:</strong> ${marketData.geopolitical.globalRisk} risk with ${marketData.geopolitical.criticalEvents} critical events</li>
+                                <li><strong>Strategy:</strong> Preserve capital now. Best opportunities come after sentiment improves</li>
                             </ul>
                         </div>
                     </div>
                 `;
             } else {
                 plan = `
-                    <div class="recommendation-box" style="background: linear-gradient(135deg, rgba(245, 158, 11, 0.1), rgba(245, 158, 11, 0.05)); border-left-color: #f59e0b;">
-                        <div class="recommendation-title">⚖️ MIXED SIGNALS - Selective Trading Only</div>
-                        <p style="color: #cbd5e1; margin-bottom: 15px;">
-                            Some favorable factors, some headwinds. Trade carefully with reduced size.
+                    <div class="recommendation-box neutral">
+                        <div class="recommendation-title">⚖️ MIXED SIGNALS - Selective Trading with Reduced Size</div>
+                        <p style="color: #cbd5e1; margin-bottom: 20px; line-height: 1.8; font-size: 1.1em;">
+                            Some favorable factors, some headwinds. Trade carefully with reduced position sizes and tighter risk controls.
                         </p>
                         <ul class="recommendation-list">
-                            <li><strong>Position Size:</strong> 2-3% max (smaller than normal)</li>
-                            <li><strong>Strategy:</strong> Cherry-pick only the strongest setups</li>
-                            <li><strong>Stop Losses:</strong> Tight at -6% (higher risk environment)</li>
-                            <li><strong>Portfolio Allocation:</strong> 30-40% crypto, 10-15% gold, 40-50% cash</li>
-                            <li><strong>Be Selective:</strong> Wait for technical + macro + geo alignment</li>
+                            <li><strong>Position Size:</strong> 2-3% maximum (50% smaller than normal bullish conditions)</li>
+                            <li><strong>Strategy:</strong> Cherry-pick only the STRONGEST technical setups with multiple confirmations</li>
+                            <li><strong>Stop Losses:</strong> Very tight at -6% (tighter than normal -8% due to mixed environment)</li>
+                            <li><strong>Portfolio Allocation:</strong> 30-40% crypto, 10-15% gold hedge, 40-50% cash ready</li>
+                            <li><strong>Selectivity:</strong> Wait for all 3 analyses to align before entering. Skip marginal setups</li>
+                            <li><strong>Exit Discipline:</strong> Take profits quickly at TP1 (+8%). Lock in gains in uncertain environment</li>
                         </ul>
-                        <div style="margin-top: 20px; padding: 15px; background: rgba(245, 158, 11, 0.1); border-radius: 10px; border-left: 3px solid #f59e0b;">
-                            <strong style="color: #fbbf24;">Current Setup:</strong>
-                            <ul style="margin-left: 20px; margin-top: 10px; color: #cbd5e1; line-height: 1.7;">
-                                <li>✅ What's Working: ${score.technical > 0 ? 'Technical signals' : score.macro > 0 ? 'Macro improving' : 'Some factors positive'}</li>
-                                <li>❌ What's Against: ${score.geopolitical < 0 ? 'Geopolitical risk' : score.macro < 0 ? 'Macro headwinds' : 'Some challenges'}</li>
-                                <li>⏰ Watch For: Fed policy signals, geopolitical developments</li>
+                        <div style="margin-top: 25px; padding: 20px; background: rgba(245, 158, 11, 0.1); border-radius: 14px; border-left: 4px solid #f59e0b;">
+                            <strong style="color: #fbbf24; font-size: 1.2em;">Current Market Setup:</strong>
+                            <ul style="margin-left: 20px; margin-top: 12px; color: #cbd5e1; line-height: 1.9;">
+                                <li>✅ <strong>What's Working:</strong> ${score.technical > 0 ? 'Technical signals positive' : score.macro > 0 ? 'Macro showing improvement' : 'Some positive factors present'}</li>
+                                <li>❌ <strong>What's Against:</strong> ${score.geopolitical < 0 ? 'Elevated geopolitical risk' : score.macro < 0 ? 'Macro headwinds present' : 'Multiple challenges'}</li>
+                                <li>⏰ <strong>Watch For:</strong> Fed policy announcements, geopolitical developments, technical breakouts above resistance</li>
                             </ul>
                         </div>
                     </div>
                 `;
             }
             
-            container.innerHTML = plan;
+            document.getElementById('tradingPlan').innerHTML = plan;
         }
 
-        // Render weekly calendar
         function renderWeeklyCalendar() {
-            const tbody = document.getElementById('weeklyCalendar');
-            
-            tbody.innerHTML = `
+            document.getElementById('weeklyCalendar').innerHTML = `
                 <thead>
                     <tr>
                         <th>Date</th>
                         <th>Event</th>
-                        <th>Impact</th>
-                        <th>Strategy</th>
+                        <th>Importance</th>
+                        <th>Expected Impact</th>
+                        <th>Trading Strategy</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td style="color: #60a5fa; font-weight: 700;">Jan 31</td>
-                        <td>FOMC Meeting</td>
-                        <td style="color: #ef4444; font-weight: 700;">CRITICAL</td>
-                        <td>Reduce risk 2 days before. Wait for guidance.</td>
+                        <td style="color: #60a5fa; font-weight: 800;">Jan 31</td>
+                        <td style="font-weight: 700;">FOMC Meeting & Rate Decision</td>
+                        <td style="color: #ef4444; font-weight: 900;">⚠️ CRITICAL</td>
+                        <td>BTC ±8%, All assets ±6%</td>
+                        <td>Reduce risk 2 days before. Wait for Fed guidance on cuts.</td>
                     </tr>
                     <tr>
-                        <td style="color: #60a5fa; font-weight: 700;">Feb 2</td>
-                        <td>Jobs Report</td>
-                        <td style="color: #f59e0b; font-weight: 700;">HIGH</td>
-                        <td>Strong jobs = hawkish Fed = bearish short-term</td>
+                        <td style="color: #60a5fa; font-weight: 800;">Feb 2</td>
+                        <td style="font-weight: 700;">Non-Farm Payrolls (Jobs)</td>
+                        <td style="color: #f59e0b; font-weight: 800;">⚠️ HIGH</td>
+                        <td>BTC ±5%, Stocks ±4%</td>
+                        <td>Strong jobs = hawkish Fed = bearish. Weak jobs = bullish.</td>
                     </tr>
                     <tr>
-                        <td style="color: #60a5fa; font-weight: 700;">Feb 13</td>
-                        <td>CPI Report</td>
-                        <td style="color: #ef4444; font-weight: 700;">CRITICAL</td>
-                        <td>Falling inflation = bullish for risk assets</td>
+                        <td style="color: #60a5fa; font-weight: 800;">Feb 13</td>
+                        <td style="font-weight: 700;">CPI Inflation Report</td>
+                        <td style="color: #ef4444; font-weight: 900;">⚠️ CRITICAL</td>
+                        <td>BTC ±6%, Commodities ±4%</td>
+                        <td>Falling CPI = very bullish for risk assets. Buy the reaction.</td>
+                    </tr>
+                    <tr>
+                        <td style="color: #60a5fa; font-weight: 800;">Feb 28</td>
+                        <td style="font-weight: 700;">GDP Report Q4 2024</td>
+                        <td style="color: #f59e0b; font-weight: 800;">⚠️ HIGH</td>
+                        <td>All assets ±5%</td>
+                        <td>Weak GDP = rate cut hopes = bullish for crypto.</td>
+                    </tr>
+                    <tr>
+                        <td style="color: #60a5fa; font-weight: 800;">Mar 7</td>
+                        <td style="font-weight: 700;">Non-Farm Payrolls (Jobs)</td>
+                        <td style="color: #f59e0b; font-weight: 800;">⚠️ HIGH</td>
+                        <td>BTC ±5%, Stocks ±4%</td>
+                        <td>Monthly data point. Watch unemployment trend.</td>
+                    </tr>
+                    <tr>
+                        <td style="color: #60a5fa; font-weight: 800;">Mar 20</td>
+                        <td style="font-weight: 700;">FOMC Meeting & Rate Decision</td>
+                        <td style="color: #ef4444; font-weight: 900;">⚠️ CRITICAL</td>
+                        <td>BTC ±10%, Major volatility</td>
+                        <td>Highest volatility day of quarter. Wait for dust to settle.</td>
                     </tr>
                 </tbody>
             `;
         }
 
-        // Create charts
         function createOverviewChart() {
             const ctx = document.getElementById('overviewChart').getContext('2d');
-            
             new Chart(ctx, {
                 type: 'line',
                 data: {
-                    labels: ['30 Days Ago', '25 Days', '20 Days', '15 Days', '10 Days', '5 Days', 'Today'],
+                    labels: ['30d ago', '25d', '20d', '15d', '10d', '5d', 'Now'],
                     datasets: [{
-                        label: 'Bitcoin Price',
+                        label: 'Bitcoin Price ($)',
                         data: [98000, 101000, 99500, 102000, 103500, 102800, 104500],
                         borderColor: '#f59e0b',
                         backgroundColor: 'rgba(245, 158, 11, 0.1)',
                         tension: 0.4,
                         borderWidth: 3,
-                        fill: true
+                        fill: true,
+                        pointRadius: 5,
+                        pointHoverRadius: 8
                     }]
                 },
                 options: {
                     responsive: true,
                     maintainAspectRatio: true,
                     plugins: {
-                        title: {
-                            display: true,
-                            text: 'Bitcoin 30-Day Price Trend',
-                            font: { size: 16, weight: 'bold' },
-                            color: '#1e293b'
-                        },
-                        legend: {
-                            labels: { color: '#1e293b', font: { size: 13 } }
-                        }
+                        title: { display: true, text: 'Bitcoin 30-Day Price Trend', font: { size: 18, weight: 'bold' }, color: '#1e293b' },
+                        legend: { labels: { color: '#1e293b', font: { size: 14 } } }
                     },
                     scales: {
-                        y: {
-                            ticks: { color: '#1e293b' },
-                            grid: { color: 'rgba(0,0,0,0.1)' }
-                        },
-                        x: {
-                            ticks: { color: '#1e293b' },
-                            grid: { color: 'rgba(0,0,0,0.1)' }
-                        }
+                        y: { ticks: { color: '#1e293b' }, grid: { color: 'rgba(0,0,0,0.1)' } },
+                        x: { ticks: { color: '#1e293b' }, grid: { color: 'rgba(0,0,0,0.1)' } }
                     }
                 }
             });
@@ -1115,97 +1447,55 @@
 
         function createMacroChart() {
             const ctx = document.getElementById('macroChart').getContext('2d');
-            
             new Chart(ctx, {
                 type: 'bar',
                 data: {
-                    labels: ['2020 COVID', '2021 Stimulus', '2022 Rate Hikes', '2023 Recovery', '2024-Now'],
+                    labels: ['2020 COVID', '2021 Stimulus', '2022 Hikes', '2023 Recovery', '2024-Now'],
                     datasets: [
-                        {
-                            label: 'Bitcoin %',
-                            data: [-50, 300, -65, 50, -10],
-                            backgroundColor: 'rgba(245, 158, 11, 0.8)',
-                            borderColor: '#f59e0b',
-                            borderWidth: 2
-                        },
-                        {
-                            label: 'Gold %',
-                            data: [25, 5, 8, 12, 5],
-                            backgroundColor: 'rgba(234, 179, 8, 0.8)',
-                            borderColor: '#eab308',
-                            borderWidth: 2
-                        }
+                        { label: 'Bitcoin %', data: [-50, 300, -65, 50, -10], backgroundColor: 'rgba(245, 158, 11, 0.8)', borderColor: '#f59e0b', borderWidth: 2 },
+                        { label: 'Gold %', data: [25, 5, 8, 12, 5], backgroundColor: 'rgba(234, 179, 8, 0.8)', borderColor: '#eab308', borderWidth: 2 }
                     ]
                 },
                 options: {
                     responsive: true,
                     maintainAspectRatio: true,
                     plugins: {
-                        title: {
-                            display: true,
-                            text: 'Asset Performance During Macro Events',
-                            font: { size: 16, weight: 'bold' },
-                            color: '#1e293b'
-                        },
-                        legend: {
-                            labels: { color: '#1e293b', font: { size: 13 } }
-                        }
+                        title: { display: true, text: 'Asset Performance During Major Macro Events', font: { size: 18, weight: 'bold' }, color: '#1e293b' },
+                        legend: { labels: { color: '#1e293b', font: { size: 14 } } }
                     },
                     scales: {
-                        y: {
-                            ticks: { color: '#1e293b' },
-                            grid: { color: 'rgba(0,0,0,0.1)' }
-                        },
-                        x: {
-                            ticks: { color: '#1e293b' },
-                            grid: { color: 'rgba(0,0,0,0.1)' }
-                        }
+                        y: { ticks: { color: '#1e293b' }, grid: { color: 'rgba(0,0,0,0.1)' } },
+                        x: { ticks: { color: '#1e293b' }, grid: { color: 'rgba(0,0,0,0.1)' } }
                     }
                 }
             });
         }
 
-        // Tab switching
         function switchTab(tabName) {
-            // Hide all tabs
-            document.querySelectorAll('.tab-content').forEach(tab => {
-                tab.classList.remove('active');
-            });
-            
-            // Remove active class from all buttons
-            document.querySelectorAll('.tab-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            
-            // Show selected tab
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
             document.getElementById(tabName).classList.add('active');
-            
-            // Add active class to clicked button
             event.target.classList.add('active');
         }
 
-        // Initialize
         function init() {
             renderOverallScore();
             renderSummaryRecommendation();
             renderQuickMetrics();
             renderTechnicalIndicators();
+            renderCryptoMarket();
             renderMacroIndicators();
-            renderGeopoliticalEvents();
+            renderMacroScenarios();
             renderGeopoliticalAlert();
+            renderGeopoliticalEvents();
+            renderRegionalRisk();
             renderTradingPlan();
             renderWeeklyCalendar();
             createOverviewChart();
             createMacroChart();
         }
 
-        // Auto-refresh every 5 minutes
-        setInterval(() => {
-            updateTimestamp();
-            init();
-        }, 300000);
-
-        // Initial load
+        setInterval(() => { updateTimestamp(); init(); }, 300000);
         init();
     </script>
 </body>
