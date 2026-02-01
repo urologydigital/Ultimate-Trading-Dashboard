@@ -543,90 +543,158 @@
         }
         updateTimestamp();
 
-        // Complete Market Data
-        const marketData = {
-            technical: {
-                btc: { 
-                    price: 104500, change24h: 2.3, volume24h: 28500000000,
-                    rsi: 58, macd: 'Bullish', ma20: 102000, ma50: 98000, 
-                    bb_upper: 108000, bb_lower: 100000, signal: 3,
-                    onchain: { exchangeNetflow: -2400, activeAddresses: 985000, hashRate: 525, whaleTransactions: 142 },
-                    whales: { largeTransfers: 28, direction: 'accumulating', topWallets: '+1.2%' },
-                    sentiment: { fearGreed: 68, socialVolume: 'High', trendingRank: 1 }
-                },
-                eth: { 
-                    price: 3850, change24h: 1.8, volume24h: 15200000000,
-                    rsi: 61, macd: 'Bullish', ma20: 3780, ma50: 3650,
-                    bb_upper: 3950, bb_lower: 3720, signal: 2,
-                    onchain: { exchangeNetflow: -890, activeAddresses: 542000, gasPrice: 28, whaleTransactions: 85 },
-                    whales: { largeTransfers: 18, direction: 'accumulating', topWallets: '+0.8%' },
-                    sentiment: { fearGreed: 65, socialVolume: 'High', trendingRank: 2 }
-                },
-                sol: { 
-                    price: 142, change24h: 3.2, volume24h: 3800000000,
-                    rsi: 65, macd: 'Bullish', ma20: 138, ma50: 132,
-                    bb_upper: 148, bb_lower: 134, signal: 3,
-                    onchain: { exchangeNetflow: -124, activeAddresses: 1250000, tps: 3500, whaleTransactions: 52 },
-                    whales: { largeTransfers: 12, direction: 'accumulating', topWallets: '+1.5%' },
-                    sentiment: { fearGreed: 72, socialVolume: 'Very High', trendingRank: 3 }
-                },
-                bnb: { 
-                    price: 385, change24h: 1.5, volume24h: 1200000000,
-                    rsi: 56, macd: 'Neutral', ma20: 380, ma50: 372,
-                    bb_upper: 395, bb_lower: 370, signal: 2,
-                    onchain: { exchangeNetflow: 45, activeAddresses: 850000, burnRate: 1250000, whaleTransactions: 38 },
-                    whales: { largeTransfers: 8, direction: 'distributing', topWallets: '-0.3%' },
-                    sentiment: { fearGreed: 58, socialVolume: 'Moderate', trendingRank: 5 }
-                },
-                xrp: { 
-                    price: 0.68, change24h: 0.8, volume24h: 2100000000,
-                    rsi: 52, macd: 'Neutral', ma20: 0.67, ma50: 0.65,
-                    bb_upper: 0.71, bb_lower: 0.64, signal: 1,
-                    onchain: { exchangeNetflow: 125, activeAddresses: 420000, ledgerClose: 3.5, whaleTransactions: 24 },
-                    whales: { largeTransfers: 15, direction: 'distributing', topWallets: '-0.5%' },
-                    sentiment: { fearGreed: 54, socialVolume: 'Moderate', trendingRank: 7 }
-                },
-                ada: { 
-                    price: 0.54, change24h: 2.1, volume24h: 850000000,
-                    rsi: 59, macd: 'Bullish', ma20: 0.52, ma50: 0.49,
-                    bb_upper: 0.57, bb_lower: 0.51, signal: 2,
-                    onchain: { exchangeNetflow: -85, activeAddresses: 380000, stakeRate: 71.5, whaleTransactions: 18 },
-                    whales: { largeTransfers: 6, direction: 'accumulating', topWallets: '+0.4%' },
-                    sentiment: { fearGreed: 62, socialVolume: 'Low', trendingRank: 12 }
-                },
-                doge: {
-                    price: 0.082, change24h: 5.2, volume24h: 950000000,
-                    rsi: 68, macd: 'Bullish', ma20: 0.078, ma50: 0.074,
-                    bb_upper: 0.088, bb_lower: 0.076, signal: 3,
-                    onchain: { exchangeNetflow: -245, activeAddresses: 125000, largeHolders: 82, whaleTransactions: 45 },
-                    whales: { largeTransfers: 22, direction: 'accumulating', topWallets: '+2.1%' },
-                    sentiment: { fearGreed: 75, socialVolume: 'Very High', trendingRank: 4 }
-                },
-                sui: {
-                    price: 4.82, change24h: 4.5, volume24h: 1850000000,
-                    rsi: 71, macd: 'Bullish', ma20: 4.65, ma50: 4.35,
-                    bb_upper: 5.10, bb_lower: 4.55, signal: 4,
-                    onchain: { exchangeNetflow: -180, activeAddresses: 285000, tps: 850, whaleTransactions: 35 },
-                    whales: { largeTransfers: 18, direction: 'strong accumulation', topWallets: '+3.2%' },
-                    sentiment: { fearGreed: 78, socialVolume: 'Very High', trendingRank: 6 }
-                }
-            },
-            macro: {
-                fedRate: { value: '5.50%', trend: 'stable', score: -2, change: '0.00%' },
-                inflation: { value: '3.2%', trend: 'down', score: 1, change: '-0.5%' },
-                dxy: { value: 104.2, trend: 'down', score: 2, change: '-2.3' },
-                m2: { value: '$21.1T', trend: 'stable', score: 0, change: '0.0%' },
-                gdp: { value: '2.1%', trend: 'down', score: 0, change: '-0.3%' },
-                yields: { value: '4.65%', trend: 'down', score: 1, change: '-0.37%' },
-                unemployment: { value: '3.9%', trend: 'up', score: 1, change: '+0.2%' },
-                vix: { value: 18.5, trend: 'up', score: 0, change: '+2.1' }
-            },
-            geopolitical: {
-                globalRisk: 'HIGH',
-                activeEvents: 4,
-                criticalEvents: 2
-            }
+        // ─── LIVE PRICE FETCH via CoinGecko (free, no key) ───
+        const COINGECKO_IDS = {
+            btc:'bitcoin', eth:'ethereum', sol:'solana',
+            bnb:'binancecoin', xrp:'ripple', ada:'cardano',
+            doge:'dogecoin', sui:'sui'
         };
+
+        // Static on-chain / whale / sentiment estimates (no single free API covers all; realistic snapshot)
+        const STATIC = {
+            btc: { onchain:{ exchangeNetflow:-2400, activeAddresses:985000, hashRate:525, whaleTransactions:142 }, whales:{ largeTransfers:28, direction:'accumulating', topWallets:'+1.2%' }, sentiment:{ socialVolume:'High', trendingRank:1 } },
+            eth: { onchain:{ exchangeNetflow:-890, activeAddresses:542000, gasPrice:28, whaleTransactions:85 }, whales:{ largeTransfers:18, direction:'accumulating', topWallets:'+0.8%' }, sentiment:{ socialVolume:'High', trendingRank:2 } },
+            sol: { onchain:{ exchangeNetflow:-124, activeAddresses:1250000, tps:3500, whaleTransactions:52 }, whales:{ largeTransfers:12, direction:'accumulating', topWallets:'+1.5%' }, sentiment:{ socialVolume:'Very High', trendingRank:3 } },
+            bnb: { onchain:{ exchangeNetflow:45, activeAddresses:850000, burnRate:1250000, whaleTransactions:38 }, whales:{ largeTransfers:8, direction:'distributing', topWallets:'-0.3%' }, sentiment:{ socialVolume:'Moderate', trendingRank:5 } },
+            xrp: { onchain:{ exchangeNetflow:125, activeAddresses:420000, ledgerClose:3.5, whaleTransactions:24 }, whales:{ largeTransfers:15, direction:'distributing', topWallets:'-0.5%' }, sentiment:{ socialVolume:'Moderate', trendingRank:7 } },
+            ada: { onchain:{ exchangeNetflow:-85, activeAddresses:380000, stakeRate:71.5, whaleTransactions:18 }, whales:{ largeTransfers:6, direction:'accumulating', topWallets:'+0.4%' }, sentiment:{ socialVolume:'Low', trendingRank:12 } },
+            doge:{ onchain:{ exchangeNetflow:-245, activeAddresses:125000, largeHolders:82, whaleTransactions:45 }, whales:{ largeTransfers:22, direction:'accumulating', topWallets:'+2.1%' }, sentiment:{ socialVolume:'Very High', trendingRank:4 } },
+            sui: { onchain:{ exchangeNetflow:-180, activeAddresses:285000, tps:850, whaleTransactions:35 }, whales:{ largeTransfers:18, direction:'strong accumulation', topWallets:'+3.2%' }, sentiment:{ socialVolume:'Very High', trendingRank:6 } }
+        };
+
+        // ─── Technical indicator math from a price array ───
+        function calcMA(prices, period) {
+            if (prices.length < period) return prices[prices.length - 1];
+            return prices.slice(-period).reduce((a, b) => a + b, 0) / period;
+        }
+        function calcRSI(prices, period = 14) {
+            if (prices.length < period + 1) return 50;
+            let gains = 0, losses = 0;
+            for (let i = prices.length - period; i < prices.length; i++) {
+                const d = prices[i] - prices[i - 1];
+                if (d > 0) gains += d; else losses -= d;
+            }
+            const avgG = gains / period, avgL = losses / period;
+            if (avgL === 0) return 100;
+            return 100 - (100 / (1 + avgG / avgL));
+        }
+        function calcMACD(prices) {
+            // EMA helper
+            function ema(arr, k) {
+                const m = 2 / (k + 1);
+                let v = arr[0];
+                for (let i = 1; i < arr.length; i++) v = arr[i] * m + v * (1 - m);
+                return v;
+            }
+            const ema12 = ema(prices, 12), ema26 = ema(prices, 26);
+            const macd = ema12 - ema26;
+            // signal = EMA-9 of MACD series — approximate with last value trend
+            const prevMacd = ema(prices.slice(0, -1), 12) - ema(prices.slice(0, -1), 26);
+            const signal = prevMacd * (2/10) + macd * (8/10); // crude EMA-9 approx
+            return { macd, signal, bullish: macd > signal };
+        }
+        function calcBB(prices, period = 20) {
+            const ma = calcMA(prices, period);
+            const slice = prices.slice(-period);
+            const variance = slice.reduce((s, p) => s + Math.pow(p - ma, 2), 0) / period;
+            const stddev = Math.sqrt(variance);
+            return { upper: ma + 2 * stddev, lower: ma - 2 * stddev };
+        }
+        function deriveSignal(coin) {
+            let s = 0;
+            if (coin.rsi < 30) s += 2; else if (coin.rsi < 50) s -= 1; else if (coin.rsi < 70) s += 1; else s -= 1;
+            if (coin.macd === 'Bullish') s += 1; else if (coin.macd === 'Bearish') s -= 1;
+            if (coin.price > coin.ma20) s += 1; else s -= 1;
+            if (coin.price > coin.ma50) s += 1; else s -= 1;
+            return Math.max(-5, Math.min(5, s));
+        }
+        // Fear & Greed derived from RSI + 24h change
+        function deriveFG(rsi, change24h) {
+            return Math.max(0, Math.min(100, Math.round(rsi * 0.6 + (change24h + 5) * 4)));
+        }
+
+        // ─── Main market data object (populated live) ───
+        const marketData = { technical: {}, macro: {
+            fedRate:{ value:'4.50%', trend:'down', score:1, change:'-0.25%' },
+            inflation:{ value:'2.9%', trend:'down', score:1, change:'-0.3%' },
+            dxy:{ value:100.8, trend:'down', score:2, change:'-3.1' },
+            m2:{ value:'$21.4T', trend:'up', score:1, change:'+0.8%' },
+            gdp:{ value:'2.4%', trend:'stable', score:0, change:'+0.1%' },
+            yields:{ value:'4.52%', trend:'down', score:1, change:'-0.18%' },
+            unemployment:{ value:'4.1%', trend:'up', score:0, change:'+0.2%' },
+            vix:{ value:16.2, trend:'down', score:1, change:'-2.4' }
+        }, geopolitical:{ globalRisk:'MODERATE', activeEvents:3, criticalEvents:1 } };
+
+        let btc30dPrices = []; // filled by fetch, used for overview chart
+
+        async function fetchLivePrices() {
+            const ids = Object.values(COINGECKO_IDS).join(',');
+            try {
+                // 1) current prices + 24h stats
+                const mktRes = await fetch(
+                    `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=${ids}&order=market_cap_desc&per_page=50&sparkline=true&price_change_percentage=24h`
+                );
+                const mktData = await mktRes.json();
+
+                // 2) BTC 30-day history for overview chart
+                const histRes = await fetch(
+                    'https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=usd&days=30&interval=daily'
+                );
+                const histData = await histRes.json();
+                btc30dPrices = histData.prices.map(p => p[1]);
+
+                // Build per-coin technical objects
+                for (const [key, geckoId] of Object.entries(COINGECKO_IDS)) {
+                    const coin = mktData.find(c => c.id === geckoId);
+                    if (!coin) continue;
+
+                    const prices = coin.sparkline_in_7d?.price || [];
+                    // extend sparkline (7 d, ~168 pts) with current price for fresh calc
+                    prices.push(coin.current_price);
+
+                    const rsi = Math.round(calcRSI(prices, 14));
+                    const ma20 = calcMA(prices, Math.min(20, prices.length));
+                    const ma50 = calcMA(prices, Math.min(50, prices.length));   // sparkline is ~168 pts so 50 works
+                    const bb = calcBB(prices, Math.min(20, prices.length));
+                    const macdObj = calcMACD(prices);
+                    const macdLabel = macdObj.bullish ? 'Bullish' : 'Bearish';
+                    const fearGreed = deriveFG(rsi, coin.price_change_percentage_24h);
+
+                    marketData.technical[key] = {
+                        price: coin.current_price,
+                        change24h: Math.round(coin.price_change_percentage_24h * 10) / 10,
+                        volume24h: coin.total_volume,
+                        rsi, macd: macdLabel,
+                        ma20: Math.round(ma20 * 1e6) / 1e6,
+                        ma50: Math.round(ma50 * 1e6) / 1e6,
+                        bb_upper: Math.round(bb.upper * 1e6) / 1e6,
+                        bb_lower: Math.round(bb.lower * 1e6) / 1e6,
+                        signal: 0, // set below after full obj exists
+                        onchain: STATIC[key].onchain,
+                        whales: STATIC[key].whales,
+                        sentiment: { fearGreed, ...STATIC[key].sentiment }
+                    };
+                    marketData.technical[key].signal = deriveSignal(marketData.technical[key]);
+                }
+                updateTimestamp();
+                renderAll();
+            } catch (e) {
+                console.warn('CoinGecko fetch failed, retrying in 60 s', e);
+            }
+        }
+
+        // kick off immediately, then every 3 min
+        fetchLivePrices();
+        setInterval(fetchLivePrices, 180000);
+
+        // ─── Smart price formatter ───
+        function fmtPrice(n) {
+            if (n === 0) return '$0';
+            if (n >= 1000)   return '$' + n.toLocaleString('en-US', { maximumFractionDigits: 2 });
+            if (n >= 1)      return '$' + n.toFixed(2);
+            if (n >= 0.01)   return '$' + n.toFixed(4);
+            return '$' + n.toFixed(6);
+        }
 
         // Calculate comprehensive scores
         function calculateOverallScore() {
@@ -701,7 +769,8 @@
         function renderSummaryRecommendation() {
             const score = calculateOverallScore();
             const boxClass = score.sentimentClass === 'bullish' ? '' : score.sentimentClass === 'bearish' ? 'bearish' : 'neutral';
-            
+            const btc = marketData.technical.btc || {};
+
             document.getElementById('summaryRecommendation').innerHTML = `
                 <div class="recommendation-box ${boxClass}">
                     <div class="recommendation-title">${score.sentiment} MARKET ENVIRONMENT</div>
@@ -712,8 +781,8 @@
                         <div style="background: rgba(59, 130, 246, 0.08); padding: 20px; border-radius: 14px; border-left: 4px solid #60a5fa;">
                             <strong style="color: #60a5fa; font-size: 1.15em;">📈 Technical</strong>
                             <p style="color: #94a3b8; margin-top: 10px; line-height: 1.7;">
-                                Signal: ${score.technical}/5 • RSI: ${marketData.technical.btc.rsi} • MACD: ${marketData.technical.btc.macd}<br>
-                                MA-20 Cross: ${marketData.technical.btc.price > marketData.technical.btc.ma20 ? '✅ Bullish' : '❌ Bearish'}
+                                Signal: ${score.technical}/5 • RSI: ${btc.rsi || '—'} • MACD: ${btc.macd || '—'}<br>
+                                MA-20 Cross: ${(btc.price||0) > (btc.ma20||0) ? '✅ Bullish' : '❌ Bearish'}
                             </p>
                         </div>
                         <div style="background: rgba(139, 92, 246, 0.08); padding: 20px; border-radius: 14px; border-left: 4px solid #a78bfa;">
@@ -736,23 +805,28 @@
         }
 
         function renderQuickMetrics() {
+            const btc = marketData.technical.btc || {};
+            const chgSign = (btc.change24h || 0) >= 0 ? '+' : '';
+            const chgClass = (btc.change24h || 0) >= 0 ? '#10b981' : '#ef4444';
+            const sigClass = (btc.signal || 0) >= 1 ? 'bullish' : (btc.signal || 0) <= -1 ? 'bearish' : 'neutral';
+
             document.getElementById('quickMetrics').innerHTML = `
                 <div class="card">
                     <div class="card-header">
                         <div class="card-title">Bitcoin (BTC)</div>
-                        <span class="badge badge-bullish">BUY +${marketData.technical.btc.signal}</span>
+                        <span class="badge badge-${sigClass}">${(btc.signal||0) >= 1 ? 'BUY' : (btc.signal||0) <= -1 ? 'SELL' : 'HOLD'} ${btc.signal > 0 ? '+' : ''}${btc.signal || 0}</span>
                     </div>
-                    <div class="metric-value value-bullish">$${marketData.technical.btc.price.toLocaleString()}</div>
-                    <div style="text-align: center; color: #10b981; font-weight: 800; margin-bottom: 18px; font-size: 1.15em;">
-                        +${marketData.technical.btc.change24h}% (24h)
+                    <div class="metric-value value-${sigClass}">${fmtPrice(btc.price || 0)}</div>
+                    <div style="text-align:center; color:${chgClass}; font-weight:800; margin-bottom:18px; font-size:1.15em;">
+                        ${chgSign}${btc.change24h || 0}% (24h)
                     </div>
                     <div class="info-box">
                         <div class="info-title">Technical Signals</div>
                         <div class="info-text">
-                            <strong>RSI:</strong> ${marketData.technical.btc.rsi} (Neutral zone)<br>
-                            <strong>MACD:</strong> ${marketData.technical.btc.macd} trend<br>
-                            <strong>Price:</strong> Above MA-20 ✅<br>
-                            <strong>Golden Cross:</strong> Active (very bullish)
+                            <strong>RSI:</strong> ${btc.rsi || '—'} (${(btc.rsi||50) < 30 ? 'Oversold' : (btc.rsi||50) > 70 ? 'Overbought' : 'Neutral zone'})<br>
+                            <strong>MACD:</strong> ${btc.macd || '—'} trend<br>
+                            <strong>Price vs MA-20:</strong> ${(btc.price||0) > (btc.ma20||0) ? '✅ Above' : '❌ Below'}<br>
+                            <strong>Price vs MA-50:</strong> ${(btc.price||0) > (btc.ma50||0) ? '✅ Above (Golden Cross zone)' : '❌ Below'}
                         </div>
                     </div>
                 </div>
@@ -760,19 +834,18 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="card-title">Federal Funds Rate</div>
-                        <span class="badge badge-bearish">RESTRICTIVE</span>
+                        <span class="badge badge-${marketData.macro.fedRate.score >= 0 ? 'bullish' : 'bearish'}">${marketData.macro.fedRate.trend === 'down' ? 'CUTTING' : 'RESTRICTIVE'}</span>
                     </div>
-                    <div class="metric-value value-bearish">${marketData.macro.fedRate.value}</div>
-                    <div style="text-align: center; color: #94a3b8; font-weight: 700; margin-bottom: 18px;">
-                        ${marketData.macro.fedRate.change} (Paused)
+                    <div class="metric-value value-${marketData.macro.fedRate.score >= 0 ? 'bullish' : 'bearish'}">${marketData.macro.fedRate.value}</div>
+                    <div style="text-align:center; color:#94a3b8; font-weight:700; margin-bottom:18px;">
+                        ${marketData.macro.fedRate.change}
                     </div>
                     <div class="info-box">
                         <div class="info-title">Macro Impact</div>
                         <div class="info-text">
-                            <strong>Status:</strong> At restrictive levels<br>
-                            <strong>Impact:</strong> Bearish for crypto (-15%)<br>
-                            <strong>Outlook:</strong> Potential cuts Q2 2025<br>
-                            <strong>Strategy:</strong> Watch for Fed pivot signals
+                            <strong>Status:</strong> ${marketData.macro.fedRate.trend === 'down' ? 'Easing cycle — bullish for crypto' : 'At restrictive levels'}<br>
+                            <strong>Impact:</strong> ${marketData.macro.fedRate.trend === 'down' ? 'Liquidity returning (+15%)' : 'Bearish for crypto (-15%)'}<br>
+                            <strong>Strategy:</strong> ${marketData.macro.fedRate.trend === 'down' ? 'Rate cuts = strong tailwind' : 'Watch for pivot signals'}
                         </div>
                     </div>
                 </div>
@@ -780,12 +853,10 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="card-title">Geopolitical Risk</div>
-                        <span class="badge badge-bearish">HIGH</span>
+                        <span class="badge badge-${marketData.geopolitical.globalRisk === 'LOW' ? 'bullish' : marketData.geopolitical.globalRisk === 'MODERATE' ? 'neutral' : 'bearish'}">${marketData.geopolitical.globalRisk}</span>
                     </div>
-                    <div class="metric-value value-bearish">${marketData.geopolitical.activeEvents}</div>
-                    <div style="text-align: center; color: #94a3b8; font-weight: 700; margin-bottom: 18px;">
-                        Active Tensions
-                    </div>
+                    <div class="metric-value value-${marketData.geopolitical.globalRisk === 'LOW' ? 'bullish' : marketData.geopolitical.globalRisk === 'MODERATE' ? 'neutral' : 'bearish'}">${marketData.geopolitical.activeEvents}</div>
+                    <div style="text-align:center; color:#94a3b8; font-weight:700; margin-bottom:18px;">Active Tensions</div>
                     <div class="info-box">
                         <div class="info-title">Key Events</div>
                         <div class="info-text">
@@ -800,78 +871,99 @@
         }
 
         function renderTechnicalIndicators() {
+            const coins = ['btc','eth','sol','bnb','xrp','ada','doge','sui'];
+            const names = { btc:'Bitcoin',eth:'Ethereum',sol:'Solana',bnb:'BNB',xrp:'XRP',ada:'Cardano',doge:'Dogecoin',sui:'Sui' };
+            const hasData = coins.some(c => marketData.technical[c]);
+            if (!hasData) { document.getElementById('technicalIndicators').innerHTML = '<p style="color:#60a5fa;padding:30px;">⏳ Waiting for live data…</p>'; return; }
+
+            let bullCount = 0, bearCount = 0, neutralCount = 0;
+            coins.forEach(c => {
+                const sig = (marketData.technical[c] || {}).signal || 0;
+                if (sig >= 1) bullCount++;
+                else if (sig <= -1) bearCount++;
+                else neutralCount++;
+            });
+
+            let rows = '';
+            coins.forEach(c => {
+                const d = marketData.technical[c];
+                if (!d) return;
+                const sig = d.signal || 0;
+                const sigLabel = sig >= 3 ? 'STRONG BUY' : sig >= 1 ? 'BUY' : sig <= -3 ? 'STRONG SELL' : sig <= -1 ? 'SELL' : 'HOLD';
+                const sigColor = sig >= 1 ? '#10b981' : sig <= -1 ? '#ef4444' : '#f59e0b';
+                const rsiColor = d.rsi > 70 ? '#f59e0b' : d.rsi < 30 ? '#10b981' : d.rsi > 50 ? '#22c55e' : '#ef4444';
+                const macdColor = d.macd === 'Bullish' ? '#10b981' : '#ef4444';
+                const aboveMa20 = d.price > d.ma20;
+                const aboveMa50 = d.price > d.ma50;
+                const bbPos = d.price > d.bb_upper ? 'Above Upper' : d.price < d.bb_lower ? 'Below Lower' : 'Mid-Range';
+                const bbColor = d.price > d.bb_upper ? '#f59e0b' : d.price < d.bb_lower ? '#10b981' : '#94a3b8';
+                const chgColor = d.change24h >= 0 ? '#10b981' : '#ef4444';
+
+                rows += `
+                    <tr>
+                        <td style="font-weight:800; color:#f1f5f9; font-size:1.05em;">${names[c]}</td>
+                        <td style="color:#cbd5e1; font-weight:700;">${fmtPrice(d.price)}</td>
+                        <td style="color:${chgColor}; font-weight:700;">${d.change24h >= 0 ? '+' : ''}${d.change24h}%</td>
+                        <td style="color:${rsiColor}; font-weight:800;">${d.rsi}</td>
+                        <td style="color:${macdColor}; font-weight:700;">${d.macd}</td>
+                        <td style="color:#cbd5e1;">${fmtPrice(d.ma20)}</td>
+                        <td style="color:#cbd5e1;">${fmtPrice(d.ma50)}</td>
+                        <td style="color:${aboveMa20 ? '#10b981' : '#ef4444'}; font-weight:700;">${aboveMa20 ? '✅ Above' : '❌ Below'}</td>
+                        <td style="color:${aboveMa50 ? '#10b981' : '#ef4444'}; font-weight:700;">${aboveMa50 ? '✅ Above' : '❌ Below'}</td>
+                        <td style="color:#cbd5e1;">${fmtPrice(d.bb_upper)}</td>
+                        <td style="color:#cbd5e1;">${fmtPrice(d.bb_lower)}</td>
+                        <td style="color:${bbColor}; font-weight:700;">${bbPos}</td>
+                        <td style="color:${sigColor}; font-weight:900; font-size:1.05em;">${sigLabel}</td>
+                    </tr>`;
+            });
+
             document.getElementById('technicalIndicators').innerHTML = `
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-title">RSI (Relative Strength)</div>
-                        <span class="badge badge-neutral">NEUTRAL</span>
+                <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:18px; margin-bottom:28px;">
+                    <div style="background:rgba(16,185,129,0.12); border:1px solid rgba(16,185,129,0.3); border-radius:16px; padding:22px; text-align:center;">
+                        <div style="color:#10b981; font-size:2.4em; font-weight:900;">${bullCount}</div>
+                        <div style="color:#10b981; font-weight:700; font-size:1.05em; margin-top:6px;">Bullish Coins</div>
+                        <div style="color:#94a3b8; font-size:0.85em; margin-top:4px;">${Math.round(bullCount/8*100)}% of tracked</div>
                     </div>
-                    <div class="metric-value value-neutral">${marketData.technical.btc.rsi}</div>
-                    <div class="info-box">
-                        <div class="info-title">Interpretation Guide</div>
-                        <div class="info-text">
-                            <strong>Below 30:</strong> Oversold (buy signal)<br>
-                            <strong>30-50:</strong> Bearish momentum<br>
-                            <strong>50-70:</strong> Bullish momentum ✅<br>
-                            <strong>Above 70:</strong> Overbought (sell signal)<br><br>
-                            <strong>Current:</strong> Healthy uptrend zone. No extreme signals. Room to move higher.
-                        </div>
+                    <div style="background:rgba(245,158,11,0.12); border:1px solid rgba(245,158,11,0.3); border-radius:16px; padding:22px; text-align:center;">
+                        <div style="color:#f59e0b; font-size:2.4em; font-weight:900;">${neutralCount}</div>
+                        <div style="color:#f59e0b; font-weight:700; font-size:1.05em; margin-top:6px;">Neutral Coins</div>
+                        <div style="color:#94a3b8; font-size:0.85em; margin-top:4px;">${Math.round(neutralCount/8*100)}% of tracked</div>
                     </div>
-                </div>
-
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-title">MACD</div>
-                        <span class="badge badge-bullish">BULLISH</span>
-                    </div>
-                    <div class="metric-value value-bullish">${marketData.technical.btc.macd.toUpperCase()}</div>
-                    <div class="info-box">
-                        <div class="info-title">Signal Analysis</div>
-                        <div class="info-text">
-                            <strong>MACD Line:</strong> Above signal line ✅<br>
-                            <strong>Histogram:</strong> Positive (green bars)<br>
-                            <strong>Crossover:</strong> Recent bullish cross<br>
-                            <strong>Momentum:</strong> Strengthening upward<br><br>
-                            <strong>Action:</strong> Confirms strong uptrend. Safe to enter on dips.
-                        </div>
+                    <div style="background:rgba(239,68,68,0.12); border:1px solid rgba(239,68,68,0.3); border-radius:16px; padding:22px; text-align:center;">
+                        <div style="color:#ef4444; font-size:2.4em; font-weight:900;">${bearCount}</div>
+                        <div style="color:#ef4444; font-weight:700; font-size:1.05em; margin-top:6px;">Bearish Coins</div>
+                        <div style="color:#94a3b8; font-size:0.85em; margin-top:4px;">${Math.round(bearCount/8*100)}% of tracked</div>
                     </div>
                 </div>
 
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-title">Moving Averages</div>
-                        <span class="badge badge-bullish">GOLDEN CROSS</span>
-                    </div>
-                    <div class="metric-value value-bullish">ALIGNED</div>
-                    <div class="info-box">
-                        <div class="info-title">Trend Analysis</div>
-                        <div class="info-text">
-                            <strong>MA-20:</strong> $${marketData.technical.btc.ma20.toLocaleString()}<br>
-                            <strong>MA-50:</strong> $${marketData.technical.btc.ma50.toLocaleString()}<br>
-                            <strong>Current Price:</strong> $${marketData.technical.btc.price.toLocaleString()}<br><br>
-                            <strong>Setup:</strong> Price > MA-20 > MA-50 ✅<br>
-                            <strong>Signal:</strong> Golden Cross = Very Bullish<br>
-                            <strong>Support:</strong> MA-20 acts as support at $${marketData.technical.btc.ma20.toLocaleString()}
-                        </div>
-                    </div>
+                <div style="overflow-x:auto;">
+                    <table style="min-width:1200px;">
+                        <thead>
+                            <tr>
+                                <th>Coin</th>
+                                <th>Price</th>
+                                <th>24h</th>
+                                <th>RSI</th>
+                                <th>MACD</th>
+                                <th>MA-20</th>
+                                <th>MA-50</th>
+                                <th>vs MA-20</th>
+                                <th>vs MA-50</th>
+                                <th>BB Upper</th>
+                                <th>BB Lower</th>
+                                <th>BB Position</th>
+                                <th>Signal</th>
+                            </tr>
+                        </thead>
+                        <tbody>${rows}</tbody>
+                    </table>
                 </div>
 
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-title">Bollinger Bands</div>
-                        <span class="badge badge-neutral">NORMAL</span>
-                    </div>
-                    <div class="metric-value value-neutral">MID-RANGE</div>
-                    <div class="info-box">
-                        <div class="info-title">Volatility Analysis</div>
-                        <div class="info-text">
-                            <strong>Upper Band:</strong> $${marketData.technical.btc.bb_upper.toLocaleString()}<br>
-                            <strong>Lower Band:</strong> $${marketData.technical.btc.bb_lower.toLocaleString()}<br>
-                            <strong>Current:</strong> $${marketData.technical.btc.price.toLocaleString()}<br><br>
-                            <strong>Position:</strong> Mid-range (healthy)<br>
-                            <strong>Volatility:</strong> Normal expansion<br>
-                            <strong>Signal:</strong> Room to move to upper band
-                        </div>
+                <div style="margin-top:24px; padding:20px; background:rgba(30,41,59,0.6); border-radius:16px; border:1px solid rgba(255,255,255,0.07);">
+                    <div style="color:#94a3b8; font-size:0.92em; line-height:2;">
+                        <strong style="color:#cbd5e1;">RSI:</strong> &lt;30 = Oversold • 30–50 = Bearish • 50–70 = Bullish • &gt;70 = Overbought &nbsp;|&nbsp;
+                        <strong style="color:#cbd5e1;">BB Position:</strong> Above Upper = breakout • Mid-Range = normal • Below Lower = potential reversal &nbsp;|&nbsp;
+                        <strong style="color:#cbd5e1;">Signal:</strong> Composite of RSI + MACD + MA crossovers
                     </div>
                 </div>
             `;
@@ -926,7 +1018,7 @@
                             <span class="badge badge-${signalClass}">${signalText}</span>
                         </div>
                         
-                        <div class="crypto-price ${changeClass}">$${crypto.price.toLocaleString()}</div>
+                        <div class="crypto-price ${changeClass}">${fmtPrice(crypto.price)}</div>
                         <div style="text-align: center; font-size: 1.15em; font-weight: 800; color: ${crypto.change24h > 0 ? '#10b981' : '#ef4444'}; margin-bottom: 20px;">
                             ${crypto.change24h > 0 ? '+' : ''}${crypto.change24h}% (24h)
                         </div>
@@ -944,22 +1036,22 @@
                                         <strong>MACD:</strong> <span style="color: ${crypto.macd === 'Bullish' ? '#10b981' : crypto.macd === 'Bearish' ? '#ef4444' : '#f59e0b'};">${crypto.macd}</span>
                                     </div>
                                     <div>
-                                        <strong>MA-20:</strong> $${crypto.ma20.toLocaleString()}<br>
+                                        <strong>MA-20:</strong> ${fmtPrice(crypto.ma20)}<br>
                                         <span style="font-size: 0.85em; color: ${crypto.price > crypto.ma20 ? '#10b981' : '#ef4444'};">
                                             ${crypto.price > crypto.ma20 ? '✅ Above' : '❌ Below'}
                                         </span>
                                     </div>
                                     <div>
-                                        <strong>MA-50:</strong> $${crypto.ma50.toLocaleString()}<br>
+                                        <strong>MA-50:</strong> ${fmtPrice(crypto.ma50)}<br>
                                         <span style="font-size: 0.85em; color: ${crypto.price > crypto.ma50 ? '#10b981' : '#ef4444'};">
                                             ${crypto.price > crypto.ma50 ? '✅ Above' : '❌ Below'}
                                         </span>
                                     </div>
                                     <div>
-                                        <strong>BB Upper:</strong> $${crypto.bb_upper.toLocaleString()}
+                                        <strong>BB Upper:</strong> ${fmtPrice(crypto.bb_upper)}
                                     </div>
                                     <div>
-                                        <strong>BB Lower:</strong> $${crypto.bb_lower.toLocaleString()}
+                                        <strong>BB Lower:</strong> ${fmtPrice(crypto.bb_lower)}
                                     </div>
                                 </div>
                                 <div style="margin-top: 12px; padding: 10px; background: rgba(59, 130, 246, 0.1); border-radius: 8px;">
@@ -1088,11 +1180,11 @@
                             </div>
                             <div style="color: #cbd5e1; line-height: 1.6; font-size: 0.95em;">
                                 ${crypto.signal >= 3 ? 
-                                    `<strong>BUY Signal:</strong> Entry $${crypto.price.toLocaleString()} • Stop -8% ($${(crypto.price * 0.92).toFixed(2)}) • TP1 +8% ($${(crypto.price * 1.08).toFixed(2)})` : 
+                                    `<strong>BUY Signal:</strong> Entry ${fmtPrice(crypto.price)} • Stop -8% (${fmtPrice(crypto.price * 0.92)}) • TP1 +8% (${fmtPrice(crypto.price * 1.08)})` : 
                                     crypto.signal >= 1 ? 
-                                    `<strong>Moderate BUY:</strong> Small position only. Entry $${crypto.price.toLocaleString()} • Tight stop -6%` :
+                                    `<strong>Moderate BUY:</strong> Small position only. Entry ${fmtPrice(crypto.price)} • Tight stop -6%` :
                                     crypto.signal <= -2 ?
-                                    `<strong>SELL Signal:</strong> Exit positions or short. Target $${(crypto.price * 0.92).toFixed(2)}` :
+                                    `<strong>SELL Signal:</strong> Exit positions or short. Target ${fmtPrice(crypto.price * 0.92)}` :
                                     `<strong>HOLD:</strong> No clear signal. Wait for better setup.`}
                             </div>
                         </div>
@@ -1412,29 +1504,48 @@
             `;
         }
 
+        let overviewChartInstance = null;
+        let macroChartInstance = null;
+
         function createOverviewChart() {
             const ctx = document.getElementById('overviewChart').getContext('2d');
-            new Chart(ctx, {
+            // Build labels & data from btc30dPrices (daily candles, up to 30)
+            let labels = [], data = [];
+            if (btc30dPrices.length > 1) {
+                const step = Math.max(1, Math.floor(btc30dPrices.length / 7));
+                for (let i = 0; i < btc30dPrices.length; i += step) labels.push('D' + (btc30dPrices.length - i));
+                labels.reverse();
+                labels[labels.length - 1] = 'Now';
+                for (let i = 0; i < btc30dPrices.length; i += step) data.push(btc30dPrices[i]);
+                data.reverse();
+            } else {
+                labels = ['30d ago','25d','20d','15d','10d','5d','Now'];
+                data   = [0,0,0,0,0,0,0];
+            }
+
+            if (overviewChartInstance) {
+                overviewChartInstance.data.labels = labels;
+                overviewChartInstance.data.datasets[0].data = data;
+                overviewChartInstance.update();
+                return;
+            }
+            overviewChartInstance = new Chart(ctx, {
                 type: 'line',
                 data: {
-                    labels: ['30d ago', '25d', '20d', '15d', '10d', '5d', 'Now'],
+                    labels,
                     datasets: [{
-                        label: 'Bitcoin Price ($)',
-                        data: [98000, 101000, 99500, 102000, 103500, 102800, 104500],
+                        label: 'Bitcoin Price (USD)',
+                        data,
                         borderColor: '#f59e0b',
                         backgroundColor: 'rgba(245, 158, 11, 0.1)',
-                        tension: 0.4,
-                        borderWidth: 3,
-                        fill: true,
-                        pointRadius: 5,
-                        pointHoverRadius: 8
+                        tension: 0.4, borderWidth: 3, fill: true,
+                        pointRadius: 4, pointHoverRadius: 7
                     }]
                 },
                 options: {
-                    responsive: true,
-                    maintainAspectRatio: true,
+                    responsive: true, maintainAspectRatio: true,
                     plugins: {
-                        title: { display: true, text: 'Bitcoin 30-Day Price Trend', font: { size: 18, weight: 'bold' }, color: '#1e293b' },
+                        title: { display: true, text: 'Bitcoin – 30-Day Price (Live)', font: { size: 18, weight: 'bold' }, color: '#1e293b' },
                         legend: { labels: { color: '#1e293b', font: { size: 14 } } }
                     },
                     scales: {
@@ -1447,18 +1558,18 @@
 
         function createMacroChart() {
             const ctx = document.getElementById('macroChart').getContext('2d');
-            new Chart(ctx, {
+            if (macroChartInstance) return; // static historical data — create once
+            macroChartInstance = new Chart(ctx, {
                 type: 'bar',
                 data: {
-                    labels: ['2020 COVID', '2021 Stimulus', '2022 Hikes', '2023 Recovery', '2024-Now'],
+                    labels: ['2020 COVID','2021 Stimulus','2022 Hikes','2023 Recovery','2024-Now'],
                     datasets: [
-                        { label: 'Bitcoin %', data: [-50, 300, -65, 50, -10], backgroundColor: 'rgba(245, 158, 11, 0.8)', borderColor: '#f59e0b', borderWidth: 2 },
-                        { label: 'Gold %', data: [25, 5, 8, 12, 5], backgroundColor: 'rgba(234, 179, 8, 0.8)', borderColor: '#eab308', borderWidth: 2 }
+                        { label:'Bitcoin %', data:[-50,300,-65,50,-10], backgroundColor:'rgba(245,158,11,0.8)', borderColor:'#f59e0b', borderWidth:2 },
+                        { label:'Gold %',    data:[25,5,8,12,5],        backgroundColor:'rgba(234,179,8,0.8)',  borderColor:'#eab308', borderWidth:2 }
                     ]
                 },
                 options: {
-                    responsive: true,
-                    maintainAspectRatio: true,
+                    responsive: true, maintainAspectRatio: true,
                     plugins: {
                         title: { display: true, text: 'Asset Performance During Major Macro Events', font: { size: 18, weight: 'bold' }, color: '#1e293b' },
                         legend: { labels: { color: '#1e293b', font: { size: 14 } } }
@@ -1478,7 +1589,9 @@
             event.target.classList.add('active');
         }
 
-        function init() {
+        function renderAll() {
+            // Guard: skip if prices haven't loaded yet
+            if (Object.keys(marketData.technical).length === 0) return;
             renderOverallScore();
             renderSummaryRecommendation();
             renderQuickMetrics();
@@ -1495,8 +1608,9 @@
             createMacroChart();
         }
 
-        setInterval(() => { updateTimestamp(); init(); }, 300000);
-        init();
+        // Show a loading state until first fetch completes
+        document.getElementById('overallScore').innerHTML =
+            '<div style="color:#60a5fa;font-size:1.2em;font-weight:700;text-align:center;padding:30px;grid-column:1/-1;">⏳ Fetching live prices…</div>';
     </script>
 </body>
 </html>
